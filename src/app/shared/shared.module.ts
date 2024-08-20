@@ -37,6 +37,7 @@ import { MatSelectModule } from '@angular/material/select';
     ReactiveFormsModule,
   ],
   exports: [
+    CommonModule,
     NavbarComponent,
     SidebarComponent,
     MatDialogModule,
