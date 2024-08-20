@@ -8,6 +8,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { VerifyComponent } from './components/verify/verify.component';
 import { ForgetPassComponent } from './components/forget-pass/forget-pass.component';
 import { ResetPassComponent } from './components/reset-pass/reset-pass.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { ResetPassComponent } from './components/reset-pass/reset-pass.component
   ],
   imports: [
     CommonModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    SharedModule
   ]
 })
 export class AuthModule { }
