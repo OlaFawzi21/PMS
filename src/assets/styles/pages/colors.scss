@@ -1,0 +1,50 @@
+/* Default (Light Mode) */
+:root {
+  --main-color: #EF9B28;
+  --default-color: #4F4F4F;
+  --second-color: #fff;
+  --bg-main-color: #EF9B28;
+  --bg-second-color: #fff;
+  --bg-ternary-color: #314a59;
+  --bg-sidebar-color: #0E382F;
+}
+
+/* Dark Mode */
+.dark-theme {
+  --main-color: #FF9F43;
+  --default-color: #B0B0B0;
+  --second-color: #E0E0E0;
+  --bg-main-color: #1E2A38;
+  --bg-second-color: #2C2C2C;
+  --bg-ternary-color: #1C2A36;
+  --bg-sidebar-color: #121212;
+}
+
+
+.main-color {
+  color: var(--main-color);
+}
+
+.default-color {
+  color: var(--default-color);
+}
+
+.second-color {
+  color: var(--second-color);
+}
+
+.bg-main-color {
+  background-color: var(--bg-main-color);
+}
+
+.bg-second-color {
+  background-color: var(--bg-second-color);
+}
+
+.bg-ternary-color {
+  background-color: var(--bg-ternary-color);
+}
+
+.bg-sidebar-color {
+  background-color: var(--bg-sidebar-color);
+}

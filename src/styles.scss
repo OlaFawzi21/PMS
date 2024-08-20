@@ -28,3 +28,5 @@ $PMS-theme: mat.define-light-theme((color: (primary: $PMS-primary,
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($PMS-theme);
+
+@import 'assets/styles/layout'
