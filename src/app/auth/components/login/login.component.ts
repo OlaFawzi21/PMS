@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
   hide: boolean = true;
@@ -17,19 +17,24 @@ export class LoginComponent {
     password: new FormControl(null, [Validators.required]),
   });
 
+  constructor(
+    private _AuthService: AuthService,
+    private _ToastrService: ToastrService,
+    private _Router: Router
+  ) {}
+
   getEmailErrorMessage() {
     const emailControl: any = this.loginForm.get('email');
 
     if (emailControl.hasError('required')) {
-      return 'You must enter a value';
+      return 'Email is required.';
     }
-    return emailControl.hasError('email') ? 'Not a valid email' : '';
+    return emailControl.hasError('email') ? 'Email is not vaild.' : '';
   }
 
   getPasswordErrorMessage() {
     const passwordControl: any = this.loginForm.get('password');
-    return passwordControl.hasError('required') ? 'You must enter a value' : '';
-
+    return passwordControl.hasError('required') ? 'Password is required.' : '';
   }
 
   onLogin(data: FormGroup) {
@@ -46,15 +51,12 @@ export class LoginComponent {
       },
       complete: () => {
         console.log('Completed Login');
-        this._ToastrService.success(" You're now logged in. Let’s get started.", 'Success!');
+        this._ToastrService.success(
+          " You're now logged in. Let’s get started.",
+          'Success!'
+        );
         this._Router.navigate(['/dashboard']);
-      }
-    })
+      },
+    });
   }
-
-  constructor(
-    private _AuthService: AuthService,
-    private _ToastrService: ToastrService,
-    private _Router: Router) { }
-
 }

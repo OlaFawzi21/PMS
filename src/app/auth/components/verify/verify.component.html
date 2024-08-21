@@ -3,13 +3,13 @@
 >
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <div class="text-center mb-3">
+      <div class="col-md-6">
+        <div class="text-center my-2">
           <img src="../../../../assets/images/logo.png" alt="logo" />
         </div>
         <div class="auth-card position-relative row justify-content-center">
-          <div class="col-lg-10">
-            <span class="second-color">welcome to PMS</span>
+          <div class="col-lg-11">
+            <span class="text-white-50">welcome to PMS</span>
             <h3 class="main-color title-auth">Verify Account</h3>
             <form
               [formGroup]="verifyForm"
@@ -57,6 +57,11 @@
               >
                 Save
               </button>
+              <a
+                class="text-center second-color span-text mt-1 pointer"
+                routerLink="/auth/register"
+                >Back to Register</a
+              >
             </form>
           </div>
         </div>
