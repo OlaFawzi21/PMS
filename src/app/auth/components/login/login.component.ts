@@ -42,7 +42,8 @@ export class LoginComponent {
       next: (res) => {
         console.log(res);
         localStorage.clear;
-        localStorage.setItem('userToken', res.token);
+        localStorage.setItem( 'userToken', res.token );
+        
         this._AuthService.getProfile();
       },
       error: (err) => {

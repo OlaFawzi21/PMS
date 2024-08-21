@@ -16,12 +16,16 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { TableComponent } from './table/table.component';
+import { DeleteComponent } from './delete/delete.component';
 
 @NgModule({
   declarations: [
     SharedComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    TableComponent,
+    DeleteComponent
   ],
   imports: [
     CommonModule,
