@@ -1,1 +1,45 @@
-<p>reset-pass works!</p>
+
+<section class="auth d-flex align-items-center justify-content-center ">
+    <div class="container">
+      <div class="d-flex justify-content-center">
+        <img src="../../../../assets/images/PMS 3 (1).svg"  class="logo-img" >
+      </div>
+    
+      <div class="row justify-content-center align-items-center  m-0 w-100 ">
+        <div class="col-md-6">
+            <div class="auth-card mx-auto p-4 card-height d-flex flex-column">
+                <p class="text-white m-0 ">Welcome to PMS</p>
+                <h1 class="main-color ">Reset Password</h1>
+                <form [formGroup]="resetform" (ngSubmit)="onReset()" class="flex-grow-1 d-flex flex-column justify-content-between">
+                    <div class="mx-auto">
+                        <mat-form-field appearance="fill" class="w-100 mb-2">
+                            <mat-label>Email</mat-label>
+                            <input matInput placeholder="Enter your email" formControlName="email" required >
+                        </mat-form-field>
+    
+                        <mat-form-field appearance="fill" class="w-100 mb-2">
+                            <mat-label>OTP Verification</mat-label>
+                            <input matInput placeholder="Enter verification code" formControlName="seed" required>
+                        </mat-form-field>
+    
+                        <mat-form-field appearance="fill" class="w-100 mb-2">
+                            <mat-label>New Password</mat-label>
+                            <input matInput placeholder="Enter new password" formControlName="password" type="password" required>
+                        </mat-form-field>
+    
+                        <mat-form-field appearance="fill" class="w-100 mb-2">
+                            <mat-label>Confirm Password</mat-label>
+                            <input matInput placeholder="Confirm new password" formControlName="confirmPassword" type="password" required>
+                        </mat-form-field>
+                    </div>
+    
+                    <div class="d-flex justify-content-center mt-3">
+                        <button type="submit" class="w-100 bg-main-color border-0 text-white p-3 rounded-5">Verify</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+  </section>

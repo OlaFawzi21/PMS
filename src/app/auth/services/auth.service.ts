@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
 import { Register } from './../interfaces/register';
 import { Verify } from '../interfaces/verify';
-import { jwtDecode } from 'jwt-decode';
+import { ResetPass } from '../interfaces/resetPass';
 import { Login } from '../interfaces/login';
 
 @Injectable({
@@ -14,6 +15,14 @@ export class AuthService {
 
   constructor(private _HttpClient: HttpClient) {
     this.getRole();
+  }
+
+
+  forgetpass(data:any):Observable<any>{
+    return this._HttpClient.post('Users/Reset/Request',data)
+  }
+  resetPass(data:ResetPass):Observable<any>{
+    return this._HttpClient.post('Users/Reset',data)
   }
 
   getProfile() {
