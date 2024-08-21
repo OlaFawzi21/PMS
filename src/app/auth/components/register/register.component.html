@@ -12,7 +12,7 @@
             <span class="text-white-50">Welcome to PMS!</span>
             <h3 class="main-color title-auth">Create New Account</h3>
 
-            <div class="d-flex justify-content-center mb-3">
+            <div class="d-flex justify-content-center">
               <ngx-dropzone (change)="onSelect($event)">
                 <ngx-dropzone-label class="main-color">
                   <mat-icon matSuffix>photo_camera</mat-icon>
@@ -42,6 +42,7 @@
                     formControlName="userName"
                     placeholder="Enter username"
                   />
+                  <mat-icon matSuffix class="text-white-50">account_circle</mat-icon>
                   <mat-error
                     *ngIf="userName?.hasError('required') && userName?.touched"
                   >
@@ -58,6 +59,7 @@
                     formControlName="email"
                     placeholder="Enter email"
                   />
+                  <mat-icon matSuffix class="text-white-50">mail</mat-icon>
                   <mat-error
                     *ngIf="email?.hasError('required') && email?.touched"
                   >
@@ -77,6 +79,7 @@
                     formControlName="country"
                     placeholder="Enter country"
                   />
+                  <mat-icon matSuffix class="text-white-50">public</mat-icon>
                   <mat-error
                     *ngIf="country?.hasError('required') && country?.touched"
                   >
@@ -93,6 +96,7 @@
                     formControlName="phoneNumber"
                     placeholder="Enter phone number"
                   />
+                  <mat-icon matSuffix class="text-white-50">phone_iphone</mat-icon>
                   <mat-error
                     *ngIf="
                       phoneNumber?.hasError('required') && phoneNumber?.touched

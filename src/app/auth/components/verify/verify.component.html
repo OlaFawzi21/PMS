@@ -24,6 +24,7 @@
                     formControlName="email"
                     placeholder="Enter email"
                   />
+                  <mat-icon matSuffix class="text-white-50">mail</mat-icon>
                   <mat-error
                     *ngIf="email?.hasError('required') && email?.touched"
                   >
@@ -43,6 +44,7 @@
                     formControlName="code"
                     placeholder="Enter verification"
                   />
+                  <mat-icon matSuffix class="text-white-50">password</mat-icon>
                   <mat-error
                     *ngIf="code?.hasError('required') && code?.touched"
                   >
