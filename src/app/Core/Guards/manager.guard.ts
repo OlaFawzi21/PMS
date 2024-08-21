@@ -1,5 +1,16 @@
-import { CanActivateFn } from '@angular/router';
+import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 export const managerGuard: CanActivateFn = (route, state) => {
-  return true;
+  const token = localStorage.getItem('userToken');
+  const _Router = inject (Router);
+  let _AuthService = inject(AuthService);
+
+  if (token !== null && _AuthService.userRole === 'Manager') { 
+    return true
+  } else{
+    _Router.navigate(['/dashboard']);
+    return false
+  }
 };

@@ -1,0 +1,30 @@
+.auth-section {
+    height: 100vh;
+    min-height: 100vh;
+    background-color: var(--main-color);
+    background-image: url(../../../../assets/images/loginBg.jpg);
+    background-size: cover;
+    background-position: center center;
+
+    .row {
+        height: inherit;
+
+        .form-container {
+            background-color: #315951E5;
+            max-height: 100vh;
+            border-radius: 16px;
+
+            h6 {
+                color: var(--secondary-color);
+            }
+        }
+    }
+    
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+        background-color: transparent;
+    }
+}
+
+.submitButton {
+    background-color: var(--secondary-color) !important;
+}

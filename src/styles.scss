@@ -12,3 +12,42 @@ $PMS-theme: mat.define-light-theme((color: (primary: $PMS-primary,
 @include mat.all-component-themes($PMS-theme);
 
 @import 'assets/styles/layout';
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --main-color: #0E382F;
+    --secondary-color: #EF9B28;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.auth-section {
+    height: 100vh;
+    min-height: 100vh;
+    background-color: var(--main-color);
+
+    .row {
+        height: inherit;
+
+        .form-container {
+            background-color: #315951E5;
+            max-height: 100vh;
+            border-radius: 16px;
+
+            h6 {
+                color: var(--secondary-color);
+            }
+        }
+    }
+    
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+        background-color: transparent;
+    }
+}
