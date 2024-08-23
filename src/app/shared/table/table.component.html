@@ -1,1 +1,34 @@
-<p>table works!</p>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th *ngFor="let head of headList">
+        {{ head.headName }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of gridData">
+      <td *ngFor="let head of headList">
+        <ng-container *ngIf="head.keyName !== 'actions'">
+          <span *ngIf="head.keyName.includes('Date'); else normalText">
+            {{ item[head.keyName] | date : "dd/MM/yyyy" }}
+          </span>
+
+          <ng-template #normalText>
+            {{ item[head.keyName] }}
+          </ng-template>
+        </ng-container>
+
+        <ng-container *ngIf="head.keyName === 'actions'">
+          <button
+            *ngFor="let action of head.actionsData"
+            (click)="handleAction(action, item)"
+            class="btn btn-sm btn-primary"
+          >
+            {{ action | titlecase }}
+          </button>
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>
+</table>

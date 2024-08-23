@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ProjectRoutingModule } from './project-routing.module';
 import { ProjectComponent } from './project.component';
 import { AddEditViewComponent } from './components/add-edit-view/add-edit-view.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { AddEditViewComponent } from './components/add-edit-view/add-edit-view.c
   ],
   imports: [
     CommonModule,
-    ProjectRoutingModule
+    ProjectRoutingModule,
+    SharedModule
   ]
 })
 export class ProjectModule { }

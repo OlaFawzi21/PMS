@@ -1,0 +1,36 @@
+.side-bar {
+  min-height: 100vh;
+  height: 100%;
+
+  .toggle{
+    width: 40px;
+    height: 50px;
+    border-radius: 10px 0 0 10px;
+    top: 15px;
+    right: 0;
+  }
+
+  .menu {
+    .item {
+      color: var(--second-color);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all .3s ease-in-out;
+
+      &:hover {
+        background-color: rgba(239, 156, 40, 0.3);
+        color: var(--main-color);
+        text-decoration: none !important;
+      }
+    }
+
+    .active {
+      background-color: rgba(239, 156, 40, 0.3);
+      color: var(--main-color);
+    }
+  }
+
+}
