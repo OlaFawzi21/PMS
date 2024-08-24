@@ -23,3 +23,8 @@ export interface Task {
   creationDate: string;
   modificationDate: string;
 }
+
+export interface addNewProject {
+  title: string;
+  description: string;
+}
