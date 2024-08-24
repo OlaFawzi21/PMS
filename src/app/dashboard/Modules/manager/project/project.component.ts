@@ -4,7 +4,7 @@ import { Project, ProjectData } from './interfaces/project';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { DeleteComponent } from 'src/app/shared/delete/delete.component';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DashService } from 'src/app/dashboard/service/dash.service';
 @Component({
   selector: 'app-project',
@@ -36,9 +36,13 @@ export class ProjectComponent {
   pageIndex = 0;
   pageSizeOptions = [5, 10, 25, 50];
   pageEvent: PageEvent;
-  
 
-  constructor(private _ProjectService: ProjectService, private _Router:Router,public dialog: MatDialog,private _DashService:DashService) {}
+  constructor(
+    private _ProjectService: ProjectService,
+    private _Router: Router,
+    public dialog: MatDialog,
+    private _DashService: DashService
+  ) {}
 
   ngOnInit(): void {
     this.getProjects();
@@ -53,7 +57,7 @@ export class ProjectComponent {
     this._ProjectService.getProjects(params).subscribe({
       next: (res) => {
         this.projectList = res;
-        console.log( this.projectList );
+        console.log(this.projectList);
       },
     });
   }
@@ -82,38 +86,37 @@ export class ProjectComponent {
   editProject(project: ProjectData) {
     console.log('Editing project:', project);
     // Implement edit logic
-    this._Router.navigate(['/dashboard/manager/projects/edit', project.id])
+    this._Router.navigate(['/dashboard/manager/projects/edit', project.id]);
   }
 
   deleteProject(project: ProjectData) {
     console.log('Deleting project:', project);
     // Implement delete logic
-    this.opendeleteDialog(project.id)
+    this.opendeleteDialog(project.id);
   }
-  opendeleteDialog(myid:number): void {
+  opendeleteDialog(myid: number): void {
     const dialogRef = this.dialog.open(DeleteComponent, {
-      data: {text:'project',id:myid},
-      
+      data: { text: 'project', id: myid },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log( "my"+result);
- if(result){
-this.ondelete(result)
- }
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('my' + result);
+      if (result) {
+        this.ondelete(result);
+      }
     });
   }
-  ondelete(id:number){
-    this._DashService.deleteproject(id).subscribe({ 
-      next:(res)=>{
-        console.log(res)
-      }
-     })}
+  ondelete(id: number) {
+    this._DashService.deleteproject(id).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+    });
+  }
   viewProject(project: ProjectData) {
     console.log('Viewing project:', project);
     // Implement view logic
-    this._Router.navigate(['/dashboard/manager/projects/view', project.id])
-
+    this._Router.navigate(['/dashboard/manager/projects/view', project.id]);
   }
 
   handlePageEvent(e: PageEvent) {
