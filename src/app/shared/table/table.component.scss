@@ -1,0 +1,29 @@
+.table {
+
+  overflow-x: auto ;
+
+  th,
+  td {
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  th {
+    padding: 20px 10px;
+    width: 300px;
+    background-color: var(--bg-ternary-color);
+    color: var(--second-color);
+  }
+
+  td {
+    color: var(--default-color);
+  }
+}
+
+.table>tbody>tr:nth-child(even)>td {
+  background-color: var(--bg-gray-color);
+}
+
+.table>tbody>tr:nth-child(odd)>td {
+  background-color: var(--bg-second-color);
+}

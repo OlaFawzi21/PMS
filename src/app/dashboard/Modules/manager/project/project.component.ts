@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ProjectService } from './services/project.service';
 import { Project, ProjectData } from './interfaces/project';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-project',
@@ -11,11 +12,27 @@ export class ProjectComponent {
   headArray = [
     { headName: 'Title', keyName: 'title' },
     { headName: 'Description', keyName: 'description' },
-    { headName: 'Creation date', keyName: 'creationDate' },
-    { headName: 'Modification date', keyName: 'modificationDate' },
-    { headName: 'Actions', keyName: 'actions' , actionsData: ['view' , 'edit' , 'delete']},
+    { headName: 'Creation Date', keyName: 'creationDate' },
+    { headName: 'Modification Date', keyName: 'modificationDate' },
+    { headName: 'Num Tasks', keyName: 'task' },
+    {
+      headName: 'Actions',
+      keyName: 'actions',
+      actionsData: [
+        { key: 'view', icon: 'visibility' },
+        { key: 'edit', icon: 'edit_square' },
+        { key: 'delete', icon: 'delete' },
+      ],
+    },
   ];
   projectList: Project;
+  searchKey: string = '';
+
+  length = 0;
+  pageSize = 10;
+  pageIndex = 0;
+  pageSizeOptions = [5, 10, 25, 50];
+  pageEvent: PageEvent;
 
   constructor(private _ProjectService: ProjectService) {}
 
@@ -25,15 +42,21 @@ export class ProjectComponent {
 
   getProjects() {
     let params = {
-      pageSize: 10,
-      pageNumber: 1,
+      pageSize: this.pageSize,
+      pageNumber: this.pageIndex + 1,
+      title: this.searchKey,
     };
     this._ProjectService.getProjects(params).subscribe({
       next: (res) => {
         this.projectList = res;
-        console.log(this.projectList);
+        console.log( this.projectList );
       },
     });
+  }
+
+  reset() {
+    this.searchKey = '';
+    this.getProjects();
   }
 
   onActionClick(action: string, project: ProjectData) {
@@ -65,5 +88,21 @@ export class ProjectComponent {
   viewProject(project: ProjectData) {
     console.log('Viewing project:', project);
     // Implement view logic
+  }
+
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+    this.getProjects();
+  }
+
+  setPageSizeOptions(setPageSizeOptionsInput: string) {
+    if (setPageSizeOptionsInput) {
+      this.pageSizeOptions = setPageSizeOptionsInput
+        .split(',')
+        .map((str) => +str);
+    }
   }
 }

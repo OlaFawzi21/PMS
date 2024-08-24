@@ -1,8 +1,20 @@
-<table class="table table-striped">
+<table class="table table-striped m-0">
   <thead>
     <tr>
       <th *ngFor="let head of headList">
         {{ head.headName }}
+        <span *ngIf="head.keyName !== 'actions'">
+          <a (click)="sortData(head.keyName, 'asc')"
+            ><mat-icon matSuffix class="main-color pointer"
+              >arrow_drop_up</mat-icon
+            ></a
+          >
+          <a (click)="sortData(head.keyName, 'desc')"
+            ><mat-icon matSuffix class="main-color pointer"
+              >arrow_drop_down</mat-icon
+            ></a
+          >
+        </span>
       </th>
     </tr>
   </thead>
@@ -15,20 +27,38 @@
           </span>
 
           <ng-template #normalText>
-            {{ item[head.keyName] }}
+            {{
+              head.keyName !== "task"
+                ? item[head.keyName]
+                : item[head.keyName].length
+            }}
           </ng-template>
         </ng-container>
 
         <ng-container *ngIf="head.keyName === 'actions'">
           <button
-            *ngFor="let action of head.actionsData"
-            (click)="handleAction(action, item)"
-            class="btn btn-sm btn-primary"
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
           >
-            {{ action | titlecase }}
+            <mat-icon>more_vert</mat-icon>
           </button>
+          <mat-menu #menu="matMenu">
+            <button
+              mat-menu-item
+              *ngFor="let action of head.actionsData"
+              (click)="handleAction(action.key, item)"
+            >
+              <mat-icon class="main-color">{{ action.icon }}</mat-icon>
+              <span class="main-color">{{ action.key | titlecase }}</span>
+            </button>
+          </mat-menu>
         </ng-container>
       </td>
     </tr>
   </tbody>
 </table>
+
+<div *ngIf="gridData.length == 0" class="text-center py-3">
+  <img src="../../../../../assets/images/no-data.png" alt="no-data" />
+</div>
