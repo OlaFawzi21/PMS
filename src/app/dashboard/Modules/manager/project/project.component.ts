@@ -90,6 +90,8 @@ export class ProjectComponent {
   viewProject(project: ProjectData) {
     console.log('Viewing project:', project);
     // Implement view logic
+    this._Router.navigate(['/dashboard/manager/projects/view', project.id])
+
   }
 
   handlePageEvent(e: PageEvent) {
