@@ -1,5 +1,5 @@
 .side-bar {
-  min-height: 100vh;
+  min-height: calc(100vh - 40px);
   height: 100%;
 
   .toggle{

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ProjectService } from './services/project.service';
 import { Project, ProjectData } from './interfaces/project';
 import { PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-project',
@@ -34,7 +35,7 @@ export class ProjectComponent {
   pageSizeOptions = [5, 10, 25, 50];
   pageEvent: PageEvent;
 
-  constructor(private _ProjectService: ProjectService) {}
+  constructor(private _ProjectService: ProjectService, private _Router:Router) {}
 
   ngOnInit(): void {
     this.getProjects();
@@ -78,6 +79,7 @@ export class ProjectComponent {
   editProject(project: ProjectData) {
     console.log('Editing project:', project);
     // Implement edit logic
+    // this._Router.navigate(['edit/', project.id])
   }
 
   deleteProject(project: ProjectData) {
