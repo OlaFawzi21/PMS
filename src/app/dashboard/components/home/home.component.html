@@ -1,1 +1,70 @@
-<p>home works!</p>
+<section class="mt-4 rounded-2  n1">
+    <div class="container">
+        <div class="sec1 p-5 rounded-5 text-white ">
+            
+                <h1 class="p-3">Welcome <span>{{Username}}</span></h1>
+                <p class="pb-5">This is a welcoming screen for the entry of the application , you can now see the options</p>
+           
+         
+        </div>
+    </div>
+</section>
+<section class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="titel p-2">
+                <h3>Tasks</h3>
+                <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+                <div class="row m-1">
+                    <div class="col-md-3  first p-3 rounded-5 ">
+                        <div class="icon1  rounded w-25 text-center">
+                            <mat-icon>donut_small</mat-icon>
+                        </div>
+                      
+                        <h4>Progress</h4>
+                        <span>{{progress.data.length}}</span>
+                    </div>
+                    <div class="col-md-3 second p-3 rounded-5 m-1 ">
+                        <div class="icon2 rounded w-25 text-center">
+                            <mat-icon>edit_square</mat-icon>
+                        </div>
+                       
+                        <h6>Tasks Number</h6>
+                        <span>{{taskCount.toDo}}</span>
+                    </div>
+                    <div class="col-md-3 third p-3 rounded-5 ">
+                        <div class="icon rounded w-25 text-center">
+                              <mat-icon >inventory</mat-icon></div>
+                       <h6>Projects Number</h6>
+                        <span>{{projects.data.length}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="titel p-2">
+                    <h3>Users</h3>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
+                    <div class="row m-1">
+                     
+                        <div class="col-md-3 second p-3 rounded-5 m-1 ">
+                            <div class="icon2 rounded w-25 text-center">
+                                <mat-icon>edit_square</mat-icon>
+                            </div>
+                           
+                            <h6>active</h6>
+                            <span>{{counter}}</span>
+                        </div>
+                        <div class="col-md-3 third p-3 rounded-5 ">
+                            <div class="icon rounded w-25 text-center">
+                                  <mat-icon >inventory</mat-icon></div>
+                           <h6>inactive</h6>
+                            <span>{{projects.data.length}}</span>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="col-md-d"></div>
+    
+</section>
