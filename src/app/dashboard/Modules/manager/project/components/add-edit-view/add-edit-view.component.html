@@ -32,13 +32,15 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="my-3 d-flex justify-content-between align-items-center">
+                        <div class="my-3 d-flex justify-content-between align-items-center"
+                            [ngClass]="{'d-none':title==='View Project'}">
                             <div class="w-25">
-                                <button class="w-100 btn-main" type="button" (click)="onCancel()" [disabled]="id>0">Cancel</button>
+                                <button class="w-100 btn-main" type="button" (click)="onCancel()"
+                                    [disabled]="id>0">Cancel</button>
                             </div>
                             <div class="w-25">
                                 <button class="w-100 btn-main bg-main-color"
-                                    [disabled]="addNewForm.invalid || title==='View Project'">Save</button>
+                                    [disabled]="addNewForm.invalid">Save</button>
                             </div>
                         </div>
                     </form>
