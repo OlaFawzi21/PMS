@@ -3,7 +3,9 @@ import { ProjectService } from './services/project.service';
 import { Project, ProjectData } from './interfaces/project';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-
+import { DeleteComponent } from 'src/app/shared/delete/delete.component';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { DashService } from 'src/app/dashboard/service/dash.service';
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html',
@@ -34,8 +36,9 @@ export class ProjectComponent {
   pageIndex = 0;
   pageSizeOptions = [5, 10, 25, 50];
   pageEvent: PageEvent;
+  
 
-  constructor(private _ProjectService: ProjectService, private _Router:Router) {}
+  constructor(private _ProjectService: ProjectService, private _Router:Router,public dialog: MatDialog,private _DashService:DashService) {}
 
   ngOnInit(): void {
     this.getProjects();
@@ -85,8 +88,27 @@ export class ProjectComponent {
   deleteProject(project: ProjectData) {
     console.log('Deleting project:', project);
     // Implement delete logic
+    this.opendeleteDialog(project.id)
   }
+  opendeleteDialog(myid:number): void {
+    const dialogRef = this.dialog.open(DeleteComponent, {
+      data: {text:'project',id:myid},
+      
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log( "my"+result);
+ if(result){
+this.ondelete(result)
+ }
+    });
+  }
+  ondelete(id:number){
+    this._DashService.deleteproject(id).subscribe({ 
+      next:(res)=>{
+        console.log(res)
+      }
+     })}
   viewProject(project: ProjectData) {
     console.log('Viewing project:', project);
     // Implement view logic
