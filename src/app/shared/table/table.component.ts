@@ -6,11 +6,6 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import {
-  Project,
-  ProjectData,
-} from 'src/app/dashboard/Modules/manager/project/interfaces/project';
-
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -18,22 +13,47 @@ import {
 })
 export class TableComponent implements OnChanges {
   @Input() headList: any[];
-  @Input() gridList: Project;
+  @Input() gridList: any;
   @Output() actionClick = new EventEmitter<{
     action: string;
-    project: ProjectData;
+    item: any;
   }>();
 
-  gridData: ProjectData[] | any = [];
+  gridData: any = [];
+
+  sortedBy: string | null = null;
+  sortDirection: 'asc' | 'desc' = 'asc';
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['gridList'] && changes['gridList'].currentValue) {
       this.gridData = this.gridList.data;
-      console.log(this.gridData);
     }
   }
 
-  handleAction(action: string, project: ProjectData) {
-    this.actionClick.emit({ action, project });
+  handleAction(action: string, item: any) {
+    this.actionClick.emit({ action, item });
   }
+
+  sortData(key: string, direction: 'asc' | 'desc') {
+    this.sortedBy = key;
+    this.sortDirection = direction;
+    this.gridData.sort((a: any, b: any) => {
+      if (key === 'date') {
+        const dateA = new Date(a[key]);
+        const dateB = new Date(b[key]);
+        return direction === 'asc'
+          ? dateA.getTime() - dateB.getTime()
+          : dateB.getTime() - dateA.getTime();
+      }
+      if (key === 'task') {
+        return direction === 'asc'
+          ? a[key].length - b[key].length
+          : b[key].length - a[key].length;
+      }
+      return direction === 'asc'
+        ? a[key].localeCompare(b[key])
+        : b[key].localeCompare(a[key]);
+    });
+  }
+
 }

@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { GlobalInterceptor } from './Core/Interceptors/global.interceptor';
 import { LoaderInterceptor } from './Core/Interceptors/loader.interceptor';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ToastrModule } from 'ngx-toastr';
       timeOut: 3000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
-    }),
+    } ),
+    NgxSpinnerModule
   ],
   providers: [
     {
