@@ -46,6 +46,7 @@ import { DeleteComponent } from './delete/delete.component';
     CommonModule,
     NavbarComponent,
     SidebarComponent,
+    TableComponent,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,

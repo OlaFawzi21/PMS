@@ -8,7 +8,8 @@ import { HomeComponent } from './components/home/home.component';
 const routes: Routes = [
   {
     path: '', component: DashboardComponent, children: [
-      {path:'home',component:HomeComponent},
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'home', component: HomeComponent },
       { path: 'manager', canActivate: [managerGuard], loadChildren: () => import('./Modules/manager/manager.module').then(m => m.ManagerModule) },
       { path: 'employee', canActivate: [employeeGuard], loadChildren: () => import('./Modules/employee/employee.module').then(m => m.EmployeeModule) }
     ]
