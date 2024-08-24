@@ -56,7 +56,7 @@ export class ProjectComponent {
   editProject(project: ProjectData) {
     console.log('Editing project:', project);
     // Implement edit logic
-    this._Router.navigate(['edit/', project.id])
+    // this._Router.navigate(['edit/', project.id])
   }
 
   deleteProject(project: ProjectData) {
