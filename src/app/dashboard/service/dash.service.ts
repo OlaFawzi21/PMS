@@ -21,4 +21,8 @@ export class DashService {
   progress(data:any):Observable<any>{
     return this._HttpClient.get('Project',data)
   }
+  deleteproject(id:number):Observable<any>{
+    return this._HttpClient.delete(`Project/${id}`)
+  }
+  
 }
