@@ -22,19 +22,56 @@
                             <input matInput placeholder="Enter verification code" formControlName="seed" required>
                         </mat-form-field>
     
-                        <mat-form-field appearance="fill" class="w-100 mb-2" hideRequiredMarker>
-                            <mat-label>New Password</mat-label>
-                            <input matInput placeholder="Enter new password" formControlName="password" type="password" required>
-                        </mat-form-field>
     
-                        <mat-form-field appearance="fill" class="w-100 mb-2" hideRequiredMarker>
-                            <mat-label>Confirm Password</mat-label>
-                            <input matInput placeholder="Confirm new password" formControlName="confirmPassword" type="password" required>
-                        </mat-form-field>
+                        <mat-form-field class="w-100" hideRequiredMarker>
+                            <mat-label>Enter Password</mat-label>
+                            <input
+                              matInput
+                              class="text-white"
+                              [type]="hide ? 'password' : 'text'"
+                              formControlName="password"
+                              placeholder="new password"
+                            />
+                            <button
+                              class="text-white-50"
+                              type="button"
+                              mat-icon-button
+                              matSuffix
+                              (click)="hide = !hide"
+                            >
+                              <mat-icon>{{
+                                hide ? "visibility_off" : "visibility"
+                              }}</mat-icon>
+                            </button>
+                           
+                          </mat-form-field>
+    
+                        <mat-form-field class="w-100" hideRequiredMarker>
+                            <mat-label>Enter Confirm Password</mat-label>
+                            <input
+                              matInput
+                              class="text-white"
+                              [type]="hide ? 'password' : 'text'"
+                              formControlName="confirmPassword"
+                              placeholder="Confirm new password"
+                            />
+                            <button
+                              class="text-white-50"
+                              type="button"
+                              mat-icon-button
+                              matSuffix
+                              (click)="hide = !hide"
+                            >
+                              <mat-icon>{{
+                                hide ? "visibility_off" : "visibility"
+                              }}</mat-icon>
+                            </button>
+                           
+                          </mat-form-field>
                     </div>
     
                     <div class="d-flex justify-content-center mt-3">
-                        <button type="submit" class="w-50 bg-main-color btn-main second-color">Verify</button>
+                        <button type="submit" class="w-50 bg-main-color btn-main second-color">save</button>
                     </div>
                     <a
                     class="text-center second-color span-text mt-1 pointer"

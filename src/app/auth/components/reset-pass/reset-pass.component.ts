@@ -11,6 +11,7 @@ import { ResetPass } from '../../interfaces/resetPass';
   styleUrls: ['./reset-pass.component.scss']
 })
 export class ResetPassComponent {
+  hide: boolean = true;
   erroMsg:string=''
   erroMsg2:string=''
   erroMsg3:string=''

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { DeleteComponent } from 'src/app/shared/delete/delete.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DashService } from 'src/app/dashboard/service/dash.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html',
@@ -37,12 +38,10 @@ export class ProjectComponent {
   pageSizeOptions = [5, 10, 25, 50];
   pageEvent: PageEvent;
 
-  constructor(
-    private _ProjectService: ProjectService,
-    private _Router: Router,
+  constructor(private _ProjectService: ProjectService, private _Router:Router,
     public dialog: MatDialog,
-    private _DashService: DashService
-  ) {}
+    private _DashService:DashService,
+    private _ToastrService: ToastrService,) {}
 
   ngOnInit(): void {
     this.getProjects();
@@ -106,13 +105,20 @@ export class ProjectComponent {
       }
     });
   }
-  ondelete(id: number) {
-    this._DashService.deleteproject(id).subscribe({
-      next: (res) => {
-        console.log(res);
+  ondelete(id:number){
+    this._DashService.deleteproject(id).subscribe({ 
+      next:(res)=>{
+        console.log(res)
+      }
+      ,    complete: () => {
+    
+        this._ToastrService.success(
+          " project deleted successfully",
+          'Success!'
+        );
+       this.getProjects()
       },
-    });
-  }
+     })}
   viewProject(project: ProjectData) {
     console.log('Viewing project:', project);
     // Implement view logic
