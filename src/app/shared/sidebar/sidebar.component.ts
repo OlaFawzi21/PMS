@@ -73,7 +73,7 @@ export class SidebarComponent {
     return this._AuthService.userRole == 'Manager' ? true : false;
   }
 
-  isEmployee() {
+  isEmployee() {    
     return this._AuthService.userRole == 'Employee' ? true : false;
   }
 }
