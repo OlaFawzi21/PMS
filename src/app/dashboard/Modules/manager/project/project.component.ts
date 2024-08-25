@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { DeleteComponent } from 'src/app/shared/delete/delete.component';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { DashService } from 'src/app/dashboard/service/dash.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html',
@@ -38,7 +39,10 @@ export class ProjectComponent {
   pageEvent: PageEvent;
   
 
-  constructor(private _ProjectService: ProjectService, private _Router:Router,public dialog: MatDialog,private _DashService:DashService) {}
+  constructor(private _ProjectService: ProjectService, private _Router:Router,
+    public dialog: MatDialog,
+    private _DashService:DashService,
+    private _ToastrService: ToastrService,) {}
 
   ngOnInit(): void {
     this.getProjects();
@@ -108,6 +112,14 @@ this.ondelete(result)
       next:(res)=>{
         console.log(res)
       }
+      ,    complete: () => {
+    
+        this._ToastrService.success(
+          " project deleted successfully",
+          'Success!'
+        );
+       this.getProjects()
+      },
      })}
   viewProject(project: ProjectData) {
     console.log('Viewing project:', project);
