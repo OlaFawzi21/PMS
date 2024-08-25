@@ -1,12 +1,24 @@
-section{
-    background-color:  #FFFFFF;
-    ;
+section {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 15px;
+
+    .email-text {
+        font-size: 13px;
+        color: #8b8b8b;
+    }
 }
-.sora{
-    height: 50px;
+
+.sora {
+    height: 60px;
     width: 60px;
 }
-.sora1{
-    height: 60px;
+
+.sora1 {
+    height: 100%;
     width: 200px;
 }

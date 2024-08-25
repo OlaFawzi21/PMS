@@ -6,32 +6,37 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-forget-pass',
   templateUrl: './forget-pass.component.html',
-  styleUrls: ['./forget-pass.component.scss']
+  styleUrls: ['./forget-pass.component.scss'],
 })
 export class ForgetPassComponent {
-constructor(private _AuthService:AuthService,private _router:Router,private _ToastrService:ToastrService){}
-email:string=''
-erroMsg:string=''
-onforgetpass():void{
-  let data ={
-  email:this.email
-  }
-this._AuthService.forgetpass(data).subscribe({
-  next:(res)=>{
-    console.log(res)
-  }, error:(err)=>{
-    console.log(err)
-      
-        this.erroMsg=err.error.additionalInfo.errors.email
-        console.timeLog(this.erroMsg)
-        this._ToastrService.warning(this.erroMsg)
-     
-       },
-  complete:()=> {
-   console.log('completed')
+  constructor(
+    private _AuthService: AuthService,
+    private _router: Router,
+    private _ToastrService: ToastrService
+  ) {}
+  email: string = '';
+  erroMsg: string = '';
+  onforgetpass(): void {
+    let data = {
+      email: this.email,
+    };
     
-    this._router.navigate(['/auth/resetPassword'])
-  },
-})
-}
+    this._AuthService.forgetpass(data).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+
+        this.erroMsg = err.error.additionalInfo.errors.email;
+        console.timeLog(this.erroMsg);
+        this._ToastrService.warning(this.erroMsg);
+      },
+      complete: () => {
+        console.log('completed');
+
+        this._router.navigate(['/auth/resetPassword']);
+      },
+    });
+  }
 }

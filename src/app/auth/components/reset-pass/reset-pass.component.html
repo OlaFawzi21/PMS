@@ -15,11 +15,13 @@
                         <mat-form-field appearance="fill" class="w-100 mb-2" hideRequiredMarker>
                             <mat-label>Email</mat-label>
                             <input matInput placeholder="Enter your email" formControlName="email" required >
+                            <mat-icon matSuffix class="text-white-50">mail</mat-icon>
                         </mat-form-field>
     
                         <mat-form-field appearance="fill" class="w-100 mb-2" hideRequiredMarker>
                             <mat-label>OTP Verification</mat-label>
                             <input matInput placeholder="Enter verification code" formControlName="seed" required>
+                            <mat-icon matSuffix class="text-white-50">password</mat-icon>
                         </mat-form-field>
     
     
@@ -51,7 +53,7 @@
                             <input
                               matInput
                               class="text-white"
-                              [type]="hide ? 'password' : 'text'"
+                              [type]="isHideConfirm ? 'password' : 'text'"
                               formControlName="confirmPassword"
                               placeholder="Confirm new password"
                             />
@@ -60,10 +62,10 @@
                               type="button"
                               mat-icon-button
                               matSuffix
-                              (click)="hide = !hide"
+                              (click)="isHideConfirm = !isHideConfirm"
                             >
                               <mat-icon>{{
-                                hide ? "visibility_off" : "visibility"
+                                isHideConfirm ? "visibility_off" : "visibility"
                               }}</mat-icon>
                             </button>
                            
@@ -71,7 +73,7 @@
                     </div>
     
                     <div class="d-flex justify-content-center mt-3">
-                        <button type="submit" class="w-50 bg-main-color btn-main second-color">save</button>
+                        <button type="submit" class="w-50 bg-main-color btn-main second-color" [disabled]="resetform.invalid">save</button>
                     </div>
                     <a
                     class="text-center second-color span-text mt-1 pointer"

@@ -12,10 +12,9 @@ import { ResetPass } from '../../interfaces/resetPass';
 })
 export class ResetPassComponent {
   hide: boolean = true;
-  erroMsg:string=''
-  erroMsg2:string=''
-  erroMsg3:string=''
-  erroMsg4:string=''
+  isHideConfirm: boolean = true;
+  errMsg: string;
+  errMsgControl: any;
   constructor(private _AuthService:AuthService , private _router:Router,private _ToastrService:ToastrService){}
   resetform:FormGroup=new FormGroup({
     email:new FormControl('',[Validators.required]),
@@ -30,17 +29,25 @@ next:(res)=>{
 },
 error:(err)=>{
   console.log(err)
-      this.erroMsg=err.error.additionalInfo.errors.seed;
-      this.erroMsg2=err.error.additionalInfo.errors.confirmPassword
-      this.erroMsg3=err.error.additionalInfo.errors.password
-      this.erroMsg4=err.error.additionalInfo.errors.email
-      console.timeLog(this.erroMsg)
-      this._ToastrService.warning(this.erroMsg)
-      this._ToastrService.warning(this.erroMsg2)
-      this._ToastrService.warning(this.erroMsg3)
-      this._ToastrService.warning(this.erroMsg4)
+  this.errMsg = err.error.message;
+  this.errMsgControl = err.error.additionalInfo
+  if ( this.errMsgControl && this.errMsgControl.errors ) {
+    for ( const control in this.errMsgControl.errors ) {
+      if ( this.errMsgControl.errors[control] ) {
+        this._ToastrService.error( this.errMsgControl.errors[control][0], 'Error', {
+          timeOut: 0
+        } );
+      }
+    }
+  }
+  else {
+    this._ToastrService.error( this.errMsg, 'Error' );
+  }
      },
-     
+      complete: () => {
+        this._ToastrService.success( 'Account Activate Successfully!', 'Success' );
+        this._router.navigate( ['/auth/login'] );
+     }
     })
   }
 }

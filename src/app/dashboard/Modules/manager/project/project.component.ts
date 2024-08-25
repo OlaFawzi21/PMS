@@ -38,10 +38,13 @@ export class ProjectComponent {
   pageSizeOptions = [5, 10, 25, 50];
   pageEvent: PageEvent;
 
-  constructor(private _ProjectService: ProjectService, private _Router:Router,
+  constructor(
+    private _ProjectService: ProjectService,
+    private _Router: Router,
     public dialog: MatDialog,
-    private _DashService:DashService,
-    private _ToastrService: ToastrService,) {}
+    private _DashService: DashService,
+    private _ToastrService: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.getProjects();
@@ -93,6 +96,7 @@ export class ProjectComponent {
     // Implement delete logic
     this.opendeleteDialog(project.id);
   }
+
   opendeleteDialog(myid: number): void {
     const dialogRef = this.dialog.open(DeleteComponent, {
       data: { text: 'project', id: myid },
@@ -105,20 +109,20 @@ export class ProjectComponent {
       }
     });
   }
-  ondelete(id:number){
-    this._DashService.deleteproject(id).subscribe({ 
-      next:(res)=>{
-        console.log(res)
-      }
-      ,    complete: () => {
-    
+
+  ondelete(id: number) {
+    this._DashService.deleteproject(id).subscribe({
+      next: (res) => {
         this._ToastrService.success(
-          " project deleted successfully",
+          ' project deleted successfully',
           'Success!'
         );
-       this.getProjects()
       },
-     })}
+      complete: () => {
+        this.getProjects();
+      },
+    });
+  }
   viewProject(project: ProjectData) {
     console.log('Viewing project:', project);
     // Implement view logic
