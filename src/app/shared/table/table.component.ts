@@ -27,7 +27,15 @@ export class TableComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['gridList'] && changes['gridList'].currentValue) {
       this.gridData = this.gridList.data;
+      console.log(this.headList);
+      
     }
+  }
+
+  getNestedProperty( obj: any, key: string ) {
+    // ['project' , 'manager' , 'userName']
+    // obj{project: {manger: {username: ""}}}
+    return key.split('.').reduce((acc, part) => acc && acc[part], obj);
   }
 
   handleAction(action: string, item: any) {

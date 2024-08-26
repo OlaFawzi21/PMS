@@ -18,7 +18,7 @@ export class ProjectComponent {
     { headName: 'Description', keyName: 'description' },
     { headName: 'Creation Date', keyName: 'creationDate' },
     { headName: 'Modification Date', keyName: 'modificationDate' },
-    { headName: 'Num Tasks', keyName: 'task' },
+    { headName: 'Num Tasks', keyName: 'task.length' },
     {
       headName: 'Actions',
       keyName: 'actions',
