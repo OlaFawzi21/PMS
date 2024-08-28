@@ -1,13 +1,16 @@
+
 .table {
+  width: 100%;
   th,
   td {
     vertical-align: middle;
     text-align: center;
+    white-space: nowrap;
   }
 
   th {
-    padding: 15px 0;
-    width: 350px;
+    padding: 15px 10px;
+    width: 300px !important;
     background-color: var(--bg-ternary-color);
     color: var(--second-color);
   }
@@ -23,4 +26,20 @@
 
 .table>tbody>tr:nth-child(odd)>td {
   background-color: var(--bg-second-color);
+}
+
+
+.status-to-do {
+  background-color: green;
+  color: white; /* Optional: to ensure text is readable */
+}
+
+.status-in-progress {
+  background-color: blue;
+  color: white; /* Optional: to ensure text is readable */
+}
+
+.status-done {
+  background-color: red;
+  color: white; /* Optional: to ensure text is readable */
 }

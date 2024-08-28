@@ -5,16 +5,12 @@
         <th *ngFor="let head of headList">
           {{ head.headName }}
           <span *ngIf="head.keyName !== 'actions'">
-            <a (click)="sortData(head.keyName, 'asc')"
-              ><mat-icon matSuffix class="main-color pointer"
-                >arrow_drop_up</mat-icon
-              ></a
-            >
-            <a (click)="sortData(head.keyName, 'desc')"
-              ><mat-icon matSuffix class="main-color pointer"
-                >arrow_drop_down</mat-icon
-              ></a
-            >
+            <a (click)="sortData(head.keyName, 'asc')">
+              <mat-icon matSuffix class="main-color pointer">arrow_drop_up</mat-icon>
+            </a>
+            <a (click)="sortData(head.keyName, 'desc')">
+              <mat-icon matSuffix class="main-color pointer">arrow_drop_down</mat-icon>
+            </a>
           </span>
         </th>
       </tr>
@@ -23,17 +19,23 @@
       <tr *ngFor="let item of gridData">
         <td *ngFor="let head of headList">
           <ng-container *ngIf="head.keyName !== 'actions'">
-            <span *ngIf="head.keyName.includes('Date'); else normalText">
-              {{ item[head.keyName] | date : "dd/MM/yyyy" }}
-            </span>
-
+            <ng-container *ngIf="head.keyName === 'imagePath'; else normalText">
+              <img
+                class="w-50"
+                height="50px"
+                [src]="'https://upskilling-egypt.com:3003/' + item[head.keyName]"
+                alt="img"
+              />
+            </ng-container>
+            
             <ng-template #normalText>
-              <!-- {{
-              head.keyName !== "task"
-                ? item[head.keyName]
-                : item[head.keyName].length
-            }} -->
-              {{ getNestedProperty(item, head.keyName) }}
+              <ng-container *ngIf="head.keyName.includes('Date'); else textData">
+                {{ item[head.keyName] | date : "dd/MM/yyyy" }}
+              </ng-container>
+
+              <ng-template #textData>
+                {{ getNestedProperty(item, head.keyName) }}
+              </ng-template>
             </ng-template>
           </ng-container>
 
@@ -61,6 +63,6 @@
     </tbody>
   </table>
 </div>
-<div *ngIf="gridData.length == 0" class="text-center py-3">
+<div *ngIf="gridData.length === 0" class="text-center py-3">
   <img src="../../../../../assets/images/no-data.png" alt="no-data" />
 </div>

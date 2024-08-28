@@ -35,7 +35,7 @@ export class SidebarComponent {
     {
       title: 'Users',
       icon: 'group',
-      link: '1',
+      link: '/dashboard/manager/users',
       isActive: this.isManager(),
     },
     {

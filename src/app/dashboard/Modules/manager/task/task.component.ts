@@ -35,7 +35,7 @@ export class TaskComponent {
   ];
   tasksList: Task;
   searchKey: string = '';
-
+  searchTag : string = ''
   length = 0;
   pageSize = 10;
   pageIndex = 0;
@@ -59,6 +59,7 @@ export class TaskComponent {
       pageSize: this.pageSize,
       pageNumber: this.pageIndex + 1,
       title: this.searchKey,
+      status: [this.searchTag],
     };
     this._TaskService.getTasks(params).subscribe({
       next: (res) => {
@@ -79,7 +80,7 @@ export class TaskComponent {
         this.editProject(task);
         break;
       case 'delete':
-        this.deleteProject(task);
+        this.deleteTask(task);
         break;
       case 'view':
         this.viewProject(task);
@@ -89,19 +90,19 @@ export class TaskComponent {
     }
   }
 
-  editProject(project: TaskData) {
-    console.log('Editing project:', project);
-    this._Router.navigate(['/dashboard/manager/projects/edit', project.id]);
+  editProject(task: TaskData) {
+    console.log('Editing project:', task);
+    this._Router.navigate(['/dashboard/manager/tasks/edit', task.id]);
   }
 
-  deleteProject(project: TaskData) {
-    console.log('Deleting project:', project);
-    this.openDeleteDialog(project.id);
+  deleteTask(task: TaskData) {
+    console.log('Deleting task:', task);
+    this.openDeleteDialog(task.id);
   }
 
   openDeleteDialog(myid: number): void {
     const dialogRef = this.dialog.open(DeleteComponent, {
-      data: { text: 'project', id: myid },
+      data: { text: 'Task', id: myid },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -113,10 +114,10 @@ export class TaskComponent {
   }
 
   onDelete(id: number) {
-    this._DashService.deleteproject(id).subscribe({
+    this._DashService.deleteTask(id).subscribe({
       next: (res) => {
         this._ToastrService.success(
-          ' project deleted successfully',
+          'task deleted successfully',
           'Success!'
         );
       },
@@ -128,7 +129,7 @@ export class TaskComponent {
 
   viewProject(project: TaskData) {
     console.log('Viewing project:', project);
-    this._Router.navigate(['/dashboard/manager/projects/view', project.id]);
+    this._Router.navigate(['/dashboard/manager/tasks/view', project.id]);
   }
 
   handlePageEvent(e: PageEvent) {

@@ -11,10 +11,9 @@ import { TaskService } from '../../services/task.service';
   styleUrls: ['./add-edit-view.component.scss']
 })
 export class AddEditViewComponent {
-  title: string = ''; // title of task
-  id: number = 0; // id of task
-  projectId: number = 0; // project id of task
-  empId: number = 0; // assigned employee id of task
+  title: string = '';
+  id: number = 0;
+  projectId: number = 0;
 
   allEmployees: any;
   allProjects: any;
@@ -28,6 +27,33 @@ export class AddEditViewComponent {
     employeeId: new FormControl(0, [Validators.required, Validators.min(1)]),
     projectId: new FormControl(0, [Validators.required]),
   });
+  constructor(
+    private _Toaster: ToastrService,
+    private _ActivatedRoute: ActivatedRoute,
+    private _TaskService: TaskService,
+    private _Router: Router
+  ) {
+  }
+
+  ngOnInit(): void {
+    this.getAllEmployees();
+    this.getAllProjects();
+
+    if (this._ActivatedRoute.snapshot.url[0].path === 'add-new') {
+      this.title = 'Add a New Task';
+    }
+    else if (this._ActivatedRoute.snapshot.url[0].path === 'edit') {
+      this.title = 'Edit Task';
+      this.id = +this._ActivatedRoute.snapshot.url[1].path;
+      this.onGetTaskById(this.id);
+    }
+    else {
+      this.title = 'View Task';
+      this.id = +this._ActivatedRoute.snapshot.url[1].path;
+      this.onGetTaskById(this.id);
+      this.addNewForm.disable();
+    }
+  }
 
   onSubmitForm(data: FormGroup) {
     if (this.id > 0 && this.title === 'Edit Task') {
@@ -42,6 +68,7 @@ export class AddEditViewComponent {
         complete: () => {
           console.log('Completed Req!');
           this._Toaster.success('Task Updated Successfully', 'Success!');
+          this._Router.navigate(['/dashboard/manager/tasks']);
         }
       })
     }
@@ -61,6 +88,44 @@ export class AddEditViewComponent {
         },
       })
     }
+  }
+
+  getTitleErrorMessage() {
+    const titleControl: any = this.addNewForm.get('title');
+    return titleControl.hasError('required') ? 'Title is required.' : '';
+  }
+  getDescriptionErrorMessage() {
+    const descriptionControl: any = this.addNewForm.get('description');
+    return descriptionControl.hasError('required') ? 'Description is required.' : '';
+  }
+  getEmployeeErrorMessage() {
+    const employeeControl: any = this.addNewForm.get('employeeId');
+    return employeeControl.hasError('required') || employeeControl.hasError('min') ? 'Select Employee is required.' : '';
+  }
+  getProjectErrorMessage() {
+    const projectControl: any = this.addNewForm.get('projectId');
+    return projectControl.hasError('required') || projectControl.hasError('min') ? 'Select Project is required.' : '';
+  }
+
+  onCancel() {
+    this.addNewForm.reset();
+  }
+
+  onGetTaskById(id: number) {
+    this._TaskService.getTaskById(id).subscribe({
+      next: (res) => {
+
+
+        this.addNewForm.patchValue(res)
+      },
+      error: (err) => {
+        console.log(err);
+        this._Toaster.error(err.error.message, 'Error!')
+      },
+      complete: () => {
+
+      },
+    })
   }
 
   // All employees in system
@@ -105,87 +170,6 @@ export class AddEditViewComponent {
   }
 
 
-  //=======================
-  // =====Error Msgs=======
-  getTitleErrorMessage() {
-    const titleControl: any = this.addNewForm.get('title');
-    return titleControl.hasError('required') ? 'Title is required.' : '';
-  }
-  getDescriptionErrorMessage() {
-    const descriptionControl: any = this.addNewForm.get('description');
-    return descriptionControl.hasError('required') ? 'Description is required.' : '';
-  }
-  getEmployeeErrorMessage() {
-    const employeeControl: any = this.addNewForm.get('employeeId');
-    return employeeControl.hasError('required') || employeeControl.hasError('min') ? 'Select Employee is required.' : '';
-  }
-  getProjectErrorMessage() {
-    const projectControl: any = this.addNewForm.get('projectId');
-    return projectControl.hasError('required') || projectControl.hasError('min') ? 'Select Project is required.' : '';
-  }
 
 
-  onCancel() {
-    this.addNewForm.reset();
-  }
-
-  //=======Handle Edit/View=======
-  //==============================
-  onGetTaskById(id: number) {
-    this._TaskService.getTaskById(id).subscribe({
-      next: (res) => {
-        console.log(res);
-        console.log(res.project.id);
-        console.log(res.employee.id);
-        this.projectId = res.project.id;
-        this.empId = res.employee.id;
-        this.formData = res;
-      },
-      error: (err) => {
-        console.log(err);
-        this._Toaster.error(err.error.message, 'Error!')
-      },
-      complete: () => {
-        console.log('Completed Req!');
-        this.addNewForm.patchValue({
-          title: this.formData?.title,
-          description: this.formData?.description,
-          employeeId: this.empId,
-          projectId: this.projectId,
-        })
-      },
-    })
-  }
-
-
-  constructor(
-    private _Toaster: ToastrService,
-    private _ActivatedRoute: ActivatedRoute,
-    private _TaskService: TaskService,
-    private _Router: Router
-  ) {
-  }
-
-  ngOnInit(): void {
-    this.getAllEmployees();
-    this.getAllProjects();
-
-    if (this._ActivatedRoute.snapshot.url[0].path === 'add-new') {
-      this.title = 'Add a New Task';
-    }
-    else if (this._ActivatedRoute.snapshot.url[0].path === 'edit') {
-      this.title = 'Edit Task';
-      this.id = +this._ActivatedRoute.snapshot.url[1].path;
-      this.onGetTaskById(this.id);
-    }
-    else {
-      this.title = 'View Task';
-      this.id = +this._ActivatedRoute.snapshot.url[1].path;
-      this.onGetTaskById(this.id);
-      this.addNewForm.get('title')?.disable();
-      this.addNewForm.get('description')?.disable();
-      this.addNewForm.get('employeeId')?.disable();
-      this.addNewForm.get('projectId')?.disable();
-    }
-  }
 }
