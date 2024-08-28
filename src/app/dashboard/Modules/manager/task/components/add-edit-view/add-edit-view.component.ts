@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ProjectService } from '../../../project/services/project.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TaskService } from '../../services/task.service';
 
@@ -19,12 +19,13 @@ export class AddEditViewComponent {
   allEmployees: any;
   allProjects: any;
 
+  //=======================
+  // =====Form Handle=======
   formData = { title: '', description: '' };
-
   addNewForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
-    employeeId: new FormControl(0, [Validators.required]),
+    employeeId: new FormControl(0, [Validators.required, Validators.min(1)]),
     projectId: new FormControl(0, [Validators.required]),
   });
 
@@ -55,54 +56,17 @@ export class AddEditViewComponent {
         },
         complete: () => {
           console.log('Completed Req!');
-          this._Toaster.success('Successfully Added Task', 'Success!')
+          this._Toaster.success('Successfully Added Task', 'Success!');
+          this._Router.navigate(['/dashboard/manager/tasks']);
         },
       })
     }
   }
 
-  getTitleErrorMessage() {
-    const titleControl: any = this.addNewForm.get('title');
-    return titleControl.hasError('required') ? 'Title is required.' : '';
-  }
-  getDescriptionErrorMessage() {
-    const descriptionControl: any = this.addNewForm.get('description');
-    return descriptionControl.hasError('required') ? 'Description is required.' : '';
-  }
-  onCancel() {
-    this.addNewForm.reset();
-  }
-
-  onGetTaskById(id: number) {
-    this._TaskService.getTaskById(id).subscribe({
-      next: (res) => {
-        console.log(res);
-        console.log(res.project.id);
-        console.log(res.employee.id);
-        this.projectId = res.project.id;
-        this.empId = res.employee.id;
-        this.formData = res;
-      },
-      error: (err) => {
-        console.log(err);
-        this._Toaster.error(err.error.message, 'Error!')
-      },
-      complete: () => {
-        console.log('Completed Req!');
-        this.addNewForm.patchValue({
-          title: this.formData?.title,
-          description: this.formData?.description,
-          employeeId: this.empId,
-          projectId: this.projectId,
-        })
-      },
-    })
-  }
-
   // All employees in system
   getAllEmployees() {
     this._TaskService.getAllUsers({
-      groups:[2],
+      groups: [2],
       pageSize: 10000,
       pageNumber: 1
     }).subscribe({
@@ -140,11 +104,65 @@ export class AddEditViewComponent {
     });
   }
 
+
+  //=======================
+  // =====Error Msgs=======
+  getTitleErrorMessage() {
+    const titleControl: any = this.addNewForm.get('title');
+    return titleControl.hasError('required') ? 'Title is required.' : '';
+  }
+  getDescriptionErrorMessage() {
+    const descriptionControl: any = this.addNewForm.get('description');
+    return descriptionControl.hasError('required') ? 'Description is required.' : '';
+  }
+  getEmployeeErrorMessage() {
+    const employeeControl: any = this.addNewForm.get('employeeId');
+    return employeeControl.hasError('required') || employeeControl.hasError('min') ? 'Select Employee is required.' : '';
+  }
+  getProjectErrorMessage() {
+    const projectControl: any = this.addNewForm.get('projectId');
+    return projectControl.hasError('required') || projectControl.hasError('min') ? 'Select Project is required.' : '';
+  }
+
+
+  onCancel() {
+    this.addNewForm.reset();
+  }
+
+  //=======Handle Edit/View=======
+  //==============================
+  onGetTaskById(id: number) {
+    this._TaskService.getTaskById(id).subscribe({
+      next: (res) => {
+        console.log(res);
+        console.log(res.project.id);
+        console.log(res.employee.id);
+        this.projectId = res.project.id;
+        this.empId = res.employee.id;
+        this.formData = res;
+      },
+      error: (err) => {
+        console.log(err);
+        this._Toaster.error(err.error.message, 'Error!')
+      },
+      complete: () => {
+        console.log('Completed Req!');
+        this.addNewForm.patchValue({
+          title: this.formData?.title,
+          description: this.formData?.description,
+          employeeId: this.empId,
+          projectId: this.projectId,
+        })
+      },
+    })
+  }
+
+
   constructor(
-    // private _ProjectService: ProjectService,
     private _Toaster: ToastrService,
     private _ActivatedRoute: ActivatedRoute,
-    private _TaskService: TaskService
+    private _TaskService: TaskService,
+    private _Router: Router
   ) {
   }
 
