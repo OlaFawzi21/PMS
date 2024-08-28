@@ -63,12 +63,12 @@ export class AddEditViewComponent {
     }
   }
 
-  // All employees in system
+  // All employees in system.
   getAllEmployees() {
     this._TaskService.getAllUsers({
       groups: [2],
       pageSize: 10000,
-      pageNumber: 1
+      pageNumber: 1,
     }).subscribe({
       next: (res) => {
         console.log(res);
@@ -83,11 +83,11 @@ export class AddEditViewComponent {
     })
   }
 
-  // All projects of the manager [Shaimaa]
+  // All projects of the manager [Shaimaa].
   getAllProjects() {
     this._TaskService.getAllProjectsManager({
       pageSize: 10000,
-      pageNumber: 1
+      pageNumber: 1,
     }).subscribe({
       next: (res) => {
         console.log(res);
@@ -158,6 +158,8 @@ export class AddEditViewComponent {
   }
 
 
+
+  
   constructor(
     private _Toaster: ToastrService,
     private _ActivatedRoute: ActivatedRoute,
