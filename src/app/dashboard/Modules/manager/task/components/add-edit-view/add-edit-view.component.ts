@@ -13,11 +13,8 @@ import { TaskService } from '../../services/task.service';
 export class AddEditViewComponent {
   title: string = ''; // title of task
   id: number = 0; // id of task
-
-
-  // projectTitle: string = ''; // project title of task
   projectId: number = 0; // project id of task
-  employeeId: number = 0; // assigned employee id of task
+  empId: number = 0; // assigned employee id of task
 
   allEmployees: any;
   allProjects: any;
@@ -43,10 +40,9 @@ export class AddEditViewComponent {
         },
         complete: () => {
           console.log('Completed Req!');
-          this._Toaster.success('Task Updated Successfully', 'Success!')
+          this._Toaster.success('Task Updated Successfully', 'Success!');
         }
       })
-      // this.onAddNewProject(data.value);
     }
     else {
       this._TaskService.addNewTask(data.value).subscribe({
@@ -81,8 +77,10 @@ export class AddEditViewComponent {
     this._TaskService.getTaskById(id).subscribe({
       next: (res) => {
         console.log(res);
+        console.log(res.project.id);
+        console.log(res.employee.id);
         this.projectId = res.project.id;
-        this.employeeId = res.employee.id;
+        this.empId = res.employee.id;
         this.formData = res;
       },
       error: (err) => {
@@ -94,7 +92,7 @@ export class AddEditViewComponent {
         this.addNewForm.patchValue({
           title: this.formData?.title,
           description: this.formData?.description,
-          employeeId: this.employeeId,
+          employeeId: this.empId,
           projectId: this.projectId,
         })
       },
@@ -104,15 +102,13 @@ export class AddEditViewComponent {
   // All employees in system
   getAllEmployees() {
     this._TaskService.getAllUsers({
+      groups:[2],
       pageSize: 10000,
       pageNumber: 1
     }).subscribe({
       next: (res) => {
         console.log(res);
         this.allEmployees = res.data;
-        console.log(this.allEmployees);
-        // this.employeeId= res.data.id;
-
       },
       error: (err) => {
         console.log(err.error.message);

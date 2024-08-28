@@ -38,7 +38,7 @@
                                 <mat-select formControlName="employeeId">
                                     <!-- <mat-option *ngFor="let item of allEmployees" [value]="item.id">{{item.userName}}</mat-option> -->
                                     <mat-option *ngFor="let item of allEmployees"
-                                        [value]="title==='Add a New Task'? item.id: employeeId">{{item.userName}}</mat-option>
+                                        [value]="item.id">{{item.userName}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <mat-form-field class="col-md-6">
