@@ -52,26 +52,9 @@ export class AddEditViewComponent implements OnInit {
           this._Toaster.success('Successfully Added Project', 'Success!')
         },
       })
-    // this.onUpdateProject(data.value)
     }
   }
 
-  // onAddNewProject(data: FormGroup) {
-  //   this._ProjectService.addNewProject(data.value).subscribe({
-  //     next: (res) => {
-  //       console.log(res);
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //       this._Toaster.error(err.error.message, 'Error!')
-  //     },
-  //     complete: () => {
-  //       console.log('Completed Req!');
-  //       this._Toaster.success('Successfully Added Project', 'Success!')
-  //     },
-  //   })
-  // }
-  
   getTitleErrorMessage() {
     const titleControl: any = this.addNewForm.get('title');
     return titleControl.hasError('required') ? 'Title is required.' : '';
@@ -99,26 +82,9 @@ export class AddEditViewComponent implements OnInit {
           title: this.formData?.title,
           description: this.formData?.description
         })
-        // this._Toaster.success('Successfully Added Project', 'Success!')
       },
     })
   }
-
-  // onUpdateProject(data: FormGroup) {
-  //   this._ProjectService.updateProject(this.id, data.value).subscribe({
-  //     next: (res) => {
-  //       console.log(res);
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //       this._Toaster.error(err.error.message, 'Error!')
-  //     },
-  //     complete: () => {
-  //       console.log('Completed Req!');
-  //       this._Toaster.success('Project Updated Successfully', 'Success!')
-  //     }
-  //   })
-  // }
 
   constructor(
     private _ProjectService: ProjectService,
