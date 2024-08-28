@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ProjectService } from '../../../project/services/project.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TaskService } from '../../services/task.service';
 
@@ -40,7 +40,8 @@ export class AddEditViewComponent {
         },
         complete: () => {
           console.log('Completed Req!');
-          this._Toaster.success('Task Updated Successfully', 'Success!');
+          this._Toaster.success( 'Task Updated Successfully', 'Success!' );
+          this.router.navigate( ['/dashboard/manager/tasks'] );
         }
       })
     }
@@ -55,7 +56,8 @@ export class AddEditViewComponent {
         },
         complete: () => {
           console.log('Completed Req!');
-          this._Toaster.success('Successfully Added Task', 'Success!')
+          this._Toaster.success( 'Successfully Added Task', 'Success!' );
+          this.router.navigate( ['/dashboard/manager/tasks'] );
         },
       })
     }
@@ -94,7 +96,7 @@ export class AddEditViewComponent {
           description: this.formData?.description,
           employeeId: this.empId,
           projectId: this.projectId,
-        })
+        } )
       },
     })
   }
@@ -144,7 +146,8 @@ export class AddEditViewComponent {
     // private _ProjectService: ProjectService,
     private _Toaster: ToastrService,
     private _ActivatedRoute: ActivatedRoute,
-    private _TaskService: TaskService
+    private _TaskService: TaskService,
+    private router : Router
   ) {
   }
 
