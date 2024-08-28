@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../../services/project.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute } from '@angular/router';
-
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-edit-view',
   templateUrl: './add-edit-view.component.html',
-  styleUrls: ['./add-edit-view.component.scss']
+  styleUrls: ['./add-edit-view.component.scss'],
 })
 export class AddEditViewComponent implements OnInit {
   title: string = '';
@@ -18,7 +17,7 @@ export class AddEditViewComponent implements OnInit {
 
   addNewForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required])
+    description: new FormControl('', [Validators.required]),
   });
 
   onSubmitForm(data: FormGroup) {
@@ -29,29 +28,30 @@ export class AddEditViewComponent implements OnInit {
         },
         error: (err) => {
           console.log(err);
-          this._Toaster.error(err.error.message, 'Error!')
+          this._Toaster.error(err.error.message, 'Error!');
         },
         complete: () => {
           console.log('Completed Req!');
-          this._Toaster.success('Project Updated Successfully', 'Success!')
-        }
-      })
+          this._Toaster.success('Project Updated Successfully', 'Success!');
+          this.router.navigate(['/dashboard/manager/projects']);
+        },
+      });
       // this.onAddNewProject(data.value);
-    }
-    else {
+    } else {
       this._ProjectService.addNewProject(data.value).subscribe({
         next: (res) => {
           console.log(res);
         },
         error: (err) => {
           console.log(err);
-          this._Toaster.error(err.error.message, 'Error!')
+          this._Toaster.error(err.error.message, 'Error!');
         },
         complete: () => {
           console.log('Completed Req!');
-          this._Toaster.success('Successfully Added Project', 'Success!')
+          this._Toaster.success('Successfully Added Project', 'Success!');
+          this.router.navigate(['/dashboard/manager/projects']);
         },
-      })
+      });
     }
   }
 
@@ -61,7 +61,9 @@ export class AddEditViewComponent implements OnInit {
   }
   getDescriptionErrorMessage() {
     const descriptionControl: any = this.addNewForm.get('description');
-    return descriptionControl.hasError('required') ? 'Description is required.' : '';
+    return descriptionControl.hasError('required')
+      ? 'Description is required.'
+      : '';
   }
   onCancel() {
     this.addNewForm.reset();
@@ -70,38 +72,36 @@ export class AddEditViewComponent implements OnInit {
     this._ProjectService.getProjectById(id).subscribe({
       next: (res) => {
         console.log(res);
-        this.formData = res
+        this.formData = res;
       },
       error: (err) => {
         console.log(err);
-        this._Toaster.error(err.error.message, 'Error!')
+        this._Toaster.error(err.error.message, 'Error!');
       },
       complete: () => {
         console.log('Completed Req!');
         this.addNewForm.patchValue({
           title: this.formData?.title,
-          description: this.formData?.description
-        })
+          description: this.formData?.description,
+        });
       },
-    })
+    });
   }
 
   constructor(
     private _ProjectService: ProjectService,
     private _Toaster: ToastrService,
-    private _ActivatedRoute: ActivatedRoute
-  ) {
-  }
+    private _ActivatedRoute: ActivatedRoute,
+    private router: Router
+  ) {}
   ngOnInit(): void {
     if (this._ActivatedRoute.snapshot.url[0].path === 'add-new') {
       this.title = 'Add a New Project';
-    }
-    else if (this._ActivatedRoute.snapshot.url[0].path === 'edit') {
+    } else if (this._ActivatedRoute.snapshot.url[0].path === 'edit') {
       this.title = 'Edit Project';
       this.id = +this._ActivatedRoute.snapshot.url[1].path;
       this.onGetProjectById(this.id);
-    }
-    else {
+    } else {
       this.title = 'View Project';
       this.id = +this._ActivatedRoute.snapshot.url[1].path;
       this.onGetProjectById(this.id);
