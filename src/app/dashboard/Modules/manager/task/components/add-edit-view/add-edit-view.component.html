@@ -33,34 +33,26 @@
                             </mat-form-field>
                         </div>
                         <div class="my-3 row justify-content-between">
-                            <!-- <mat-form-field class="col-md-6">
-                                <mat-label>User</mat-label>
-                                <ng-container *ngIf="title==='Edit Task'||'View Task'; else allUsers">
-                                    <mat-select>
-                                        <mat-option *ngFor="let item of allUsers" [value]="item.id">{{item.userName}}</mat-option>
-                                    </mat-select>
-                                </ng-container>
-                                <ng-template #allUsers>
-                                    <mat-select>
-                                        <mat-option *ngFor="let item of allUsers" [value]="item.id">{{item.userName}}</mat-option>
-                                    </mat-select>
-                                </ng-template>
-                            </mat-form-field> -->
                             <mat-form-field class="col-md-6">
                                 <mat-label>Employees</mat-label>
-                                <mat-select  formControlName="employeeId"  >
-                                    <mat-option *ngFor="let item of allEmployees" [value]="item.id">{{item.userName}}</mat-option>
+                                <mat-select formControlName="employeeId">
+                                    <!-- <mat-option *ngFor="let item of allEmployees" [value]="item.id">{{item.userName}}</mat-option> -->
+                                    <mat-option *ngFor="let item of allEmployees"
+                                        [value]="title==='Add a New Task'? item.id: employeeId">{{item.userName}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <mat-form-field class="col-md-6">
                                 <mat-label>Projects</mat-label>
-                                <mat-select  formControlName="projectId" >
-                                    <mat-option *ngFor="let item of allProjects" [value]="item.id">{{item.title}}</mat-option>
+                                <mat-select formControlName="projectId">
+                                    <mat-option *ngFor="let item of allProjects"
+                                        [value]="item.id">{{item.title}}</mat-option>
+                                    <mat-option *ngFor="let item of allProjects"
+                                        [value]="title==='Add a New Task'?item.id: projectId">{{item.title}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
                         <div class="my-3 d-flex justify-content-between align-items-center"
-                            [ngClass]="{'d-none':title==='View Project'}">
+                            [ngClass]="{'d-none':title==='View Task'}">
                             <div class="w-25">
                                 <button class="w-100 btn-main" type="button" (click)="onCancel()"
                                     [disabled]="id>0">Cancel</button>

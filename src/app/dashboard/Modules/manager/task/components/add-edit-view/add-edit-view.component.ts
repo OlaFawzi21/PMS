@@ -11,17 +11,18 @@ import { TaskService } from '../../services/task.service';
   styleUrls: ['./add-edit-view.component.scss']
 })
 export class AddEditViewComponent {
-  title: string = '';
-  id: number = 0;
-  projectId: number = 0;
-  projectTitle: string = '';
-  employeeId: number = 0;
-  // action: string = '';
+  title: string = ''; // title of task
+  id: number = 0; // id of task
 
-  allEmployees:any;
-  allProjects:any;
-  
-  formData = { title: '', description: '', employeeId: 0, projectId: 0 };
+
+  // projectTitle: string = ''; // project title of task
+  projectId: number = 0; // project id of task
+  employeeId: number = 0; // assigned employee id of task
+
+  allEmployees: any;
+  allProjects: any;
+
+  formData = { title: '', description: '' };
 
   addNewForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -32,7 +33,7 @@ export class AddEditViewComponent {
 
   onSubmitForm(data: FormGroup) {
     if (this.id > 0 && this.title === 'Edit Task') {
-      this._ProjectService.updateProject(this.id, data.value).subscribe({
+      this._TaskService.updateTask(this.id, data.value).subscribe({
         next: (res) => {
           console.log(res);
         },
@@ -48,7 +49,7 @@ export class AddEditViewComponent {
       // this.onAddNewProject(data.value);
     }
     else {
-      this._ProjectService.addNewProject(data.value).subscribe({
+      this._TaskService.addNewTask(data.value).subscribe({
         next: (res) => {
           console.log(res);
         },
@@ -75,13 +76,14 @@ export class AddEditViewComponent {
   onCancel() {
     this.addNewForm.reset();
   }
+
   onGetTaskById(id: number) {
     this._TaskService.getTaskById(id).subscribe({
       next: (res) => {
         console.log(res);
         this.projectId = res.project.id;
-        this.projectTitle = res.project.title;
-        this.formData = res
+        this.employeeId = res.employee.id;
+        this.formData = res;
       },
       error: (err) => {
         console.log(err);
@@ -92,50 +94,58 @@ export class AddEditViewComponent {
         this.addNewForm.patchValue({
           title: this.formData?.title,
           description: this.formData?.description,
-          employeeId: this.formData?.employeeId,
-          projectId:  this.formData?.projectId,
+          employeeId: this.employeeId,
+          projectId: this.projectId,
         })
       },
     })
   }
 
-  onGetAllEmployees() {
+  // All employees in system
+  getAllEmployees() {
     this._TaskService.getAllUsers({
       pageSize: 10000,
       pageNumber: 1
     }).subscribe({
-      next: (res) => { 
+      next: (res) => {
+        console.log(res);
         this.allEmployees = res.data;
+        console.log(this.allEmployees);
+        // this.employeeId= res.data.id;
+
       },
-      error: (err) => { 
+      error: (err) => {
         console.log(err.error.message);
       },
-      complete: () => { 
+      complete: () => {
         console.log('Completed All Users Request');
       },
     })
   }
 
-  onGetAllProjects(){
-    this._ProjectService.getProjects({
-      pageSize : 10000,
-      pageNumber : 1
+  // All projects of the manager [Shaimaa]
+  getAllProjects() {
+    this._TaskService.getAllProjectsManager({
+      pageSize: 10000,
+      pageNumber: 1
     }).subscribe({
       next: (res) => {
+        console.log(res);
         this.allProjects = res.data;
-        // this.projectId = this.allProjects?.id;
+        console.log(this.allProjects);
+        // this.projectId = res.data.id;
       },
-      error: (err) => { 
+      error: (err) => {
         console.log(err.error.message);
       },
-      complete: () => { 
+      complete: () => {
         console.log('Completed All Projects Request');
       },
-    })
+    });
   }
-  
+
   constructor(
-    private _ProjectService: ProjectService,
+    // private _ProjectService: ProjectService,
     private _Toaster: ToastrService,
     private _ActivatedRoute: ActivatedRoute,
     private _TaskService: TaskService
@@ -143,10 +153,9 @@ export class AddEditViewComponent {
   }
 
   ngOnInit(): void {
-    this.onGetAllEmployees();
-    this.allEmployees;
-    this.onGetAllProjects();
-    this.allProjects;
+    this.getAllEmployees();
+    this.getAllProjects();
+
     if (this._ActivatedRoute.snapshot.url[0].path === 'add-new') {
       this.title = 'Add a New Task';
     }
@@ -161,6 +170,8 @@ export class AddEditViewComponent {
       this.onGetTaskById(this.id);
       this.addNewForm.get('title')?.disable();
       this.addNewForm.get('description')?.disable();
+      this.addNewForm.get('employeeId')?.disable();
+      this.addNewForm.get('projectId')?.disable();
     }
   }
 }
