@@ -1,10 +1,21 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Params } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
 
-constructor() { }
+  constructor(private _HttpClient: HttpClient) { }
+
+  getTaskById(id: number): Observable<any> {
+    return this._HttpClient.get(`Task/${id}`);
+  }
+
+  getAllUsers(parms: any): Observable<any>{
+    return this._HttpClient.get(`Users`, {params: parms})
+  }
 
 }
