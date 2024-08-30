@@ -127,7 +127,7 @@ export class UsersComponent {
 
   viewProject(project: any) {
     console.log('Viewing project:', project);
-    this._Router.navigate(['/dashboard/manager/tasks/view', project.id]);
+    this._Router.navigate(['/dashboard/manager/users/view', project.id]);
   }
 
   handlePageEvent(e: PageEvent) {
