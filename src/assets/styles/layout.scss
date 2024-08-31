@@ -6,8 +6,10 @@
 @import 'pages/fonts';
 @import 'pages/ngx-drop';
 
+
 body {
   margin: 0;
+  height: 100%;
 }
 
 * {
@@ -27,3 +29,15 @@ a {
   }
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgb(221, 221, 221);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--bg-ternary-color);
+  border-radius: 5px;
+}

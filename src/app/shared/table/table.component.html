@@ -3,15 +3,27 @@
     <thead>
       <tr>
         <th *ngFor="let head of headList">
-          {{ head.headName }}
-          <span *ngIf="head.keyName !== 'actions'">
-            <a (click)="sortData(head.keyName, 'asc')">
-              <mat-icon matSuffix class="main-color pointer">arrow_drop_up</mat-icon>
-            </a>
-            <a (click)="sortData(head.keyName, 'desc')">
-              <mat-icon matSuffix class="main-color pointer">arrow_drop_down</mat-icon>
-            </a>
-          </span>
+          <div class="d-flex align-items-center justify-content-center gap-2">
+            <span>{{ head.headName }}</span>
+            <span
+              *ngIf="
+                head.keyName !== 'actions' &&
+                head.keyName !== 'imagePath' &&
+                head.keyName !== 'isActivated'
+              "
+            >
+              <a (click)="sortData(head.keyName, 'asc')">
+                <mat-icon matSuffix class="main-color pointer"
+                  >arrow_drop_up</mat-icon
+                >
+              </a>
+              <a (click)="sortData(head.keyName, 'desc')">
+                <mat-icon matSuffix class="main-color pointer"
+                  >arrow_drop_down</mat-icon
+                >
+              </a>
+            </span>
+          </div>
         </th>
       </tr>
     </thead>
@@ -19,23 +31,41 @@
       <tr *ngFor="let item of gridData">
         <td *ngFor="let head of headList">
           <ng-container *ngIf="head.keyName !== 'actions'">
-            <ng-container *ngIf="head.keyName === 'imagePath'; else normalText">
-              <img
-                class="w-50"
-                height="50px"
-                [src]="'https://upskilling-egypt.com:3003/' + item[head.keyName]"
-                alt="img"
-              />
+            <ng-container *ngIf="head.keyName.includes('Date'); else notDate">
+              {{ item[head.keyName] | date : "dd/MM/yyyy" }}
             </ng-container>
-            
-            <ng-template #normalText>
-              <ng-container *ngIf="head.keyName.includes('Date'); else textData">
-                {{ item[head.keyName] | date : "dd/MM/yyyy" }}
-              </ng-container>
 
-              <ng-template #textData>
-                {{ getNestedProperty(item, head.keyName) }}
-              </ng-template>
+            <ng-template #notDate>
+              <ng-container
+                *ngIf="head.keyName === 'isActivated'; else noIsActive"
+              >
+                <span
+                  [ngClass]="{
+                    statusActive: item[head.keyName] == true,
+                    statusNotActive: item[head.keyName] == false
+                  }"
+                >
+                  {{ item[head.keyName] ? "Active" : "Not Active" }}
+                </span>
+              </ng-container>
+            </ng-template>
+
+            <ng-template #noIsActive>
+              <ng-container *ngIf="head.keyName === 'status'; else defaultText">
+                <span
+                  [ngClass]="{
+                    todo: item[head.keyName] == 'ToDo',
+                    inProgress: item[head.keyName] == 'InProgress',
+                    done: item[head.keyName] == 'Done',
+                  }"
+                >
+                  {{ item[head.keyName] }}
+                </span>
+              </ng-container>
+            </ng-template>
+
+            <ng-template #defaultText>
+              {{ getNestedProperty(item, head.keyName) }}
             </ng-template>
           </ng-container>
 
@@ -63,6 +93,7 @@
     </tbody>
   </table>
 </div>
+
 <div *ngIf="gridData.length === 0" class="text-center py-3">
   <img src="../../../../../assets/images/no-data.png" alt="no-data" />
 </div>

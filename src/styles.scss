@@ -12,9 +12,3 @@ $PMS-theme: mat.define-light-theme((color: (primary: $PMS-primary,
 @include mat.all-component-themes($PMS-theme);
 
 @import 'assets/styles/layout';
-
-
-html,
-body {
-    height: 100%;
-}

@@ -2,21 +2,33 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { User, UserData } from '../interfaces/user';
+import { Params } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private _HttpClient: HttpClient,private _toastr:ToastrService) {}
-  getUsers(parms: any): Observable<any> {
-    return this._HttpClient.get(`Users`, { params: parms });
+  constructor(
+    private _HttpClient: HttpClient,
+    private _toastr: ToastrService
+  ) { }
+  
+  getUsers(myParams: Params): Observable<User> {
+    return this._HttpClient.get<User>(`Users`, { params: myParams });
   }
-  getuserById(id: number):Observable<any>{
-    return this._HttpClient.get(`Users/${id}`);
+
+  getUserById(id: number): Observable<UserData> {
+    return this._HttpClient.get<UserData>(`Users/${id}`);
   }
-  imageUrl:any='https://upskilling-egypt.com:3003/'
+
+  blockUser(idUser: number): Observable<UserData> {
+    return this._HttpClient.put<UserData>(`Users/${idUser}` ,{id : idUser});
+  }
+
+
+  imageUrl: any = 'https://upskilling-egypt.com:3003/';
   getImagePath(imagePath: string): string {
-    
     return this.imageUrl + imagePath;
   }
   loadImage(imagePath: string, files: any[]): void {

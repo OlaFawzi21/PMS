@@ -31,7 +31,7 @@ userform=new FormGroup({
 })
 
   getuser(id:number){
-this._UserService.getuserById(id).subscribe({
+this._UserService.getUserById(id).subscribe({
   next:(res)=>{
 this.userlist=res
   },complete:()=> {

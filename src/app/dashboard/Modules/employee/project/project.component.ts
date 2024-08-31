@@ -1,41 +1,30 @@
 import { Component } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { Task, TaskData } from './interfaces/task';
 import { MatDialog } from '@angular/material/dialog';
-import { ToastrService } from 'ngx-toastr';
-import { DashService } from 'src/app/dashboard/service/dash.service';
+import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { TaskService } from './services/task.service';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { DashService } from 'src/app/dashboard/service/dash.service';
 import { DeleteComponent } from 'src/app/shared/delete/delete.component';
+import { Project, ProjectData } from '../../manager/project/interfaces/project';
+import { ProjectService } from '../../manager/project/services/project.service';
 
 @Component({
-  selector: 'app-task',
-  templateUrl: './task.component.html',
-  styleUrls: ['./task.component.scss']
+  selector: 'app-project',
+  templateUrl: './project.component.html',
+  styleUrls: ['./project.component.scss']
 })
-export class TaskComponent {
+export class ProjectComponent {
   headArray = [
     { headName: 'Title', keyName: 'title' },
-    { headName: 'Status', keyName: 'status' },
     { headName: 'Description', keyName: 'description' },
-    { headName: 'Project', keyName: 'project.title' },
-    { headName: 'Manger', keyName: 'project.manager.userName' },
-    { headName: 'Employee', keyName: 'employee.userName' },
     { headName: 'Creation Date', keyName: 'creationDate' },
     { headName: 'Modification Date', keyName: 'modificationDate' },
-    {
-      headName: 'Actions',
-      keyName: 'actions',
-      actionsData: [
-        { key: 'view', icon: 'visibility' },
-        { key: 'edit', icon: 'edit_square' },
-        { key: 'delete', icon: 'delete' },
-      ],
-    },
+    { headName: 'Num Tasks', keyName: 'task.length' },
   ];
-  tasksList: Task;
+  projectList: Project;
   searchKey: string = '';
-  searchStatus : string = ''
+
   length = 0;
   pageSize = 10;
   pageIndex = 0;
@@ -43,94 +32,95 @@ export class TaskComponent {
   pageEvent: PageEvent;
 
   constructor(
-    private _TaskService: TaskService,
+    private _ProjectService: ProjectService,
     private _Router: Router,
     public dialog: MatDialog,
     private _DashService: DashService,
-    private _ToastrService: ToastrService
+    private _ToastrService: ToastrService,
+    private _AuthService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.getTasks();
+    this.getProjects();
   }
 
-  getTasks() {
+  getProjects() {
     let params = {
       pageSize: this.pageSize,
       pageNumber: this.pageIndex + 1,
       title: this.searchKey,
-      status: this.searchStatus,
     };
-    this._TaskService.getTasks(params).subscribe({
+    this._ProjectService.getProjectsEmployee(params).subscribe({
       next: (res) => {
-        this.tasksList = res;
-        console.log(this.tasksList);
+        this.projectList = res;
+        console.log(this.projectList);
       },
     });
   }
 
   reset() {
     this.searchKey = '';
-    this.searchStatus = '';
-    this.getTasks();
+    this.getProjects();
   }
 
-  onActionClick(action: string, task: TaskData) {
+  onActionClick(action: string, project: ProjectData) {
     switch (action) {
       case 'edit':
-        this.editProject(task);
+        this.editProject(project);
         break;
       case 'delete':
-        this.deleteTask(task);
+        this.deleteProject(project);
         break;
       case 'view':
-        this.viewProject(task);
+        this.viewProject(project);
         break;
       default:
         console.log('Unknown action:', action);
     }
   }
 
-  editProject(task: TaskData) {
-    console.log('Editing project:', task);
-    this._Router.navigate(['/dashboard/manager/tasks/edit', task.id]);
+  editProject(project: ProjectData) {
+    console.log('Editing project:', project);
+    // Implement edit logic
+    this._Router.navigate(['/dashboard/manager/projects/edit', project.id]);
   }
 
-  deleteTask(task: TaskData) {
-    console.log('Deleting task:', task);
-    this.openDeleteDialog(task.id);
+  deleteProject(project: ProjectData) {
+    console.log('Deleting project:', project);
+    // Implement delete logic
+    this.opendeleteDialog(project.id);
   }
 
-  openDeleteDialog(myid: number): void {
+  opendeleteDialog(myid: number): void {
     const dialogRef = this.dialog.open(DeleteComponent, {
-      data: { text: 'Task', id: myid },
+      data: { text: 'project', id: myid },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('my' + result);
       if (result) {
-        this.onDelete(result);
+        this.ondelete(result);
       }
     });
   }
 
-  onDelete(id: number) {
-    this._DashService.deleteTask(id).subscribe({
+  ondelete(id: number) {
+    this._DashService.deleteproject(id).subscribe({
       next: (res) => {
         this._ToastrService.success(
-          'task deleted successfully',
+          ' project deleted successfully',
           'Success!'
         );
       },
       complete: () => {
-        this.getTasks();
+        this.getProjects();
       },
     });
   }
-
-  viewProject(project: TaskData) {
+  viewProject(project: ProjectData) {
     console.log('Viewing project:', project);
-    this._Router.navigate(['/dashboard/manager/tasks/view', project.id]);
+    // Implement view logic
+    this._Router.navigate(['/dashboard/manager/projects/view', project.id]);
   }
 
   handlePageEvent(e: PageEvent) {
@@ -138,7 +128,7 @@ export class TaskComponent {
     this.length = e.length;
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
-    this.getTasks();
+    this.getProjects();
   }
 
   setPageSizeOptions(setPageSizeOptionsInput: string) {
@@ -148,5 +138,5 @@ export class TaskComponent {
         .map((str) => +str);
     }
   }
-
 }
+

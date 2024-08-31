@@ -6,36 +6,46 @@
       <h3 class="default-color mb-0">Users</h3>
     </div>
   </div>
-  <div class="container mt-3 ">
+  <div class="container mt-3">
     <div class="box-shadow rounded-3 overflow-hidden box-table">
       <div
         class="bg-second-color d-flex align-items-center justify-content-between p-4"
       >
-        <mat-form-field class="w-50 main-color rounded-4 overflow-hidden">
+        <mat-form-field class="col-5 main-color rounded-4 overflow-hidden">
           <mat-label>Search here</mat-label>
           <input
-            type="email"
+            type="text"
             matInput
-            placeholder="Search here"
+            placeholder="Search by {{ searchType }}"
             [(ngModel)]="searchKey"
-            (keydown.enter)="getTasks()"
+            (keydown.enter)="getUsers()"
           />
           <mat-hint class="default-color">Please press enter</mat-hint>
         </mat-form-field>
 
-
-        <!-- <mat-form-field appearance="fill" class="col-4 main-color rounded-4 overflow-hidden">
-          <mat-label>Status</mat-label>
-          <mat-select [(ngModel)]="searchTag" (selectionChange)="getTasks()">
-            <mat-option value="">All</mat-option>
-            <mat-option value="ToDo">ToDO</mat-option>
-            <mat-option value="InProgress">InProgress</mat-option>
-            <mat-option value="Done">Done</mat-option>
+        <mat-form-field class="col-3 main-color rounded-4 overflow-hidden">
+          <mat-label>Search Type</mat-label>
+          <mat-select [(ngModel)]="searchType">
+            <mat-option value="userName">Username</mat-option>
+            <mat-option value="email">Email</mat-option>
+            <mat-option value="country">Country</mat-option>
           </mat-select>
-        </mat-form-field> -->
+        </mat-form-field>
 
+        <mat-form-field class="col-3 main-color rounded-4 overflow-hidden">
+          <mat-label>Roles</mat-label>
+          <mat-select [(ngModel)]="role" (selectionChange)="getUsers()">
+            <mat-option value="">All</mat-option>
+            <mat-option value="1">Manager</mat-option>
+            <mat-option value="2">Employee</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-        <a class="pointer d-flex align-items-center" (click)="reset()">
+        <a
+          class="pointer d-flex align-items-center"
+          (click)="reset()"
+          *ngIf="searchKey !== '' || searchType !== '' || role !== ''"
+        >
           <mat-icon matSuffix class="main-color">restart_alt</mat-icon>
           <span class="default-color">Reset</span>
         </a>
