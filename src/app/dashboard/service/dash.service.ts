@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,24 +9,31 @@ import { Observable } from 'rxjs';
 export class DashService {
 
   constructor(private _HttpClient: HttpClient) {
-   
+
   }
 
 
-  TASKS():Observable<any>{
+  TASKS(): Observable<any> {
     return this._HttpClient.get('Task/count')
   }
-  projectNumber(data:any):Observable<any>{
-    return this._HttpClient.get('Project/manager',data)
+  projectNumber(data: any): Observable<any> {
+    return this._HttpClient.get('Project/manager', data)
   }
-  progress(data:any):Observable<any>{
-    return this._HttpClient.get('Project',data)
+  progress(data: any): Observable<any> {
+    return this._HttpClient.get('Project', data)
   }
-  deleteproject(id:number):Observable<any>{
+  deleteproject(id: number): Observable<any> {
     return this._HttpClient.delete(`Project/${id}`)
   }
-  deleteTask(id:number):Observable<any>{
+  deleteTask(id: number): Observable<any> {
     return this._HttpClient.delete(`Task/${id}`)
   }
-  
+
+  getCurrentProfile(): Observable<any> {
+    return this._HttpClient.get(`Users/currentUser`);
+  }
+  updateProfile(data: FormData): Observable<any> {
+    return this._HttpClient.put(`Users`, data)
+  }
+
 }

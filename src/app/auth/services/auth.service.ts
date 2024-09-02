@@ -31,6 +31,7 @@ export class AuthService {
     localStorage.setItem('userName', decoded.userName);
     localStorage.setItem('userEmail', decoded.userEmail);
     localStorage.setItem('role', decoded.userGroup);
+    localStorage.setItem('userId', decoded.userId);
     this.getRole();
   }
 

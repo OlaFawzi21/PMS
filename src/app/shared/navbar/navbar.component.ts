@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -19,6 +20,17 @@ export class NavbarComponent {
   constructor(private dialog:MatDialog ,private _router:Router ,private _ToastrService:ToastrService
     ,private  _SharedService:SharedService){}
 
+    
+    // userId:number=0;
+    
+    logout() {
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('userEmail');
+      localStorage.removeItem('role');
+      localStorage.clear();
+      this._router.navigate(['/auth/login']);
+    }
+  
   
   openchangDialog(): void {
     const dialogRef = this.dialog.open(ChangepasswordComponent, {
