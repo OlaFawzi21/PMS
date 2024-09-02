@@ -33,12 +33,6 @@ export class SidebarComponent {
       isActive: true,
     },
     {
-      title: 'Users',
-      icon: 'group',
-      link: '/dashboard/manager/users',
-      isActive: this.isManager(),
-    },
-    {
       title: 'Projects',
       icon: 'grid_view',
       link: '/dashboard/manager/projects',
@@ -51,9 +45,15 @@ export class SidebarComponent {
       isActive: this.isManager(),
     },
     {
+      title: 'Users',
+      icon: 'group',
+      link: '/dashboard/manager/users',
+      isActive: this.isManager(),
+    },
+    {
       title: 'Projects',
       icon: 'grid_view',
-      link: '1',
+      link: '/dashboard/employee/projects',
       isActive: this.isEmployee(),
     },
     {

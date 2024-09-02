@@ -16,6 +16,12 @@ export class ProjectService {
     });
   }
 
+  getProjectsEmployee(myParams: Params): Observable<Project> {
+    return this._HttpClient.get<Project>('Project/employee', {
+      params: myParams,
+    });
+  }
+
   addNewProject(data:addNewProject): Observable<any>{
     return this._HttpClient.post('Project', data);
   }

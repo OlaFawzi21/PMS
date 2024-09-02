@@ -6,20 +6,21 @@ import { DashService } from 'src/app/dashboard/service/dash.service';
 import { Router } from '@angular/router';
 import { DeleteComponent } from 'src/app/shared/delete/delete.component';
 import { UserService } from './services/user.service';
-import { User } from './interfaces/user';
+import { User, UserData } from './interfaces/user';
+import { BlockComponent } from './components/block/block.component';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent {
   headArray = [
     { headName: 'Username', keyName: 'userName' },
     { headName: 'Email', keyName: 'email' },
-    { headName: 'Image', keyName: 'imagePath' },
     { headName: 'Country', keyName: 'country' },
-    { headName: 'phoneNumber', keyName: 'phoneNumber' },
+    { headName: 'Phone Number', keyName: 'phoneNumber' },
+    { headName: 'Status', keyName: 'isActivated' },
     { headName: 'Creation Date', keyName: 'creationDate' },
     { headName: 'Modification Date', keyName: 'modificationDate' },
     {
@@ -27,13 +28,15 @@ export class UsersComponent {
       keyName: 'actions',
       actionsData: [
         { key: 'view', icon: 'visibility' },
-        { key: 'block', icon: 'block' },
+        { key: 'toggle block', icon: 'block' },
       ],
     },
   ];
   usersList: User;
   searchKey: string = '';
-  searchTag : string = ''
+  searchType: string = '';
+  role: string = '';
+  resMsg: any;
   length = 0;
   pageSize = 10;
   pageIndex = 0;
@@ -41,93 +44,86 @@ export class UsersComponent {
   pageEvent: PageEvent;
 
   constructor(
-    private _TaskService: UserService,
+    private _UserService: UserService,
     private _Router: Router,
     public dialog: MatDialog,
-    private _DashService: DashService,
     private _ToastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
-    this.getTasks();
+    this.getUsers();
   }
 
-  getTasks() {
+  getUsers() {
     let params = {
       pageSize: this.pageSize,
       pageNumber: this.pageIndex + 1,
-      title: this.searchKey,
-      status: [this.searchTag],
+      [this.searchType]: this.searchKey,
+      groups: this.role,
     };
-    this._TaskService.getUsers(params).subscribe({
+    this._UserService.getUsers(params).subscribe({
       next: (res) => {
         this.usersList = res;
-        console.log(this.usersList);
       },
     });
   }
 
   reset() {
     this.searchKey = '';
-    this.getTasks();
+    this.searchType = '';
+    this.role = '';
+    this.getUsers();
   }
 
-  onActionClick(action: string, user: any) {
+  onActionClick(action: string, user: UserData) {
     switch (action) {
-      case 'edit':
-        this.editProject(user);
-        break;
-      case 'delete':
-        this.deleteProject(user);
+      case 'toggle block':
+        this.blockUser(user);
         break;
       case 'view':
-        this.viewProject(user);
+        this.viewUser(user);
         break;
       default:
         console.log('Unknown action:', action);
     }
   }
 
-  editProject(user: any) {
-    console.log('Editing project:', user);
-    this._Router.navigate(['/dashboard/manager/tasks/edit', user.id]);
+  viewUser(user: UserData) {
+    this._Router.navigate(['/dashboard/manager/users/view', user.id]);
   }
 
-  deleteProject(task: any) {
-    console.log('Deleting project:', task);
-    this.openDeleteDialog(task.id);
+  blockUser(user: UserData) {
+    this.openDialog(user);
   }
 
-  openDeleteDialog(myid: number): void {
-    const dialogRef = this.dialog.open(DeleteComponent, {
-      data: { text: 'project', id: myid },
+  openDialog(data: UserData): void {
+    const dialogRef = this.dialog.open(BlockComponent, {
+      data: data,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('my' + result);
       if (result) {
-        this.onDelete(result);
+        this._UserService.blockUser(result).subscribe({
+          next: (res) => {
+            this.resMsg = res;
+          },
+          error: (err) => {
+            console.log(err);
+          },
+          complete: () => {
+            if (this.resMsg.isActivated == false) {
+              this._ToastrService.success('Block user successful', 'Success');
+            } else {
+              this._ToastrService.success(
+                'Un Block user successful',
+                'Success'
+              );
+            }
+            this.getUsers();
+          },
+        });
       }
     });
-  }
-
-  onDelete(id: number) {
-    this._DashService.deleteproject(id).subscribe({
-      next: (res) => {
-        this._ToastrService.success(
-          ' project deleted successfully',
-          'Success!'
-        );
-      },
-      complete: () => {
-        this.getTasks();
-      },
-    });
-  }
-
-  viewProject(project: any) {
-    console.log('Viewing project:', project);
-    this._Router.navigate(['/dashboard/manager/tasks/view', project.id]);
   }
 
   handlePageEvent(e: PageEvent) {
@@ -135,7 +131,7 @@ export class UsersComponent {
     this.length = e.length;
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
-    this.getTasks();
+    this.getUsers();
   }
 
   setPageSizeOptions(setPageSizeOptionsInput: string) {

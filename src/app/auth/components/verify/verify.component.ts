@@ -14,10 +14,14 @@ export class VerifyComponent {
 
   verifyForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    code: ['',Validators.required],
-  } );
-  
-  constructor(private fb: FormBuilder,private _AuthService: AuthService,private toastr: ToastrService, private router: Router,) {}
+    code: ['', Validators.required],
+  });
+
+  constructor(
+    private fb: FormBuilder, 
+    private _AuthService: AuthService, 
+    private toastr: ToastrService, 
+    private router: Router,) { }
 
   get code() {
     return this.verifyForm.get('code');

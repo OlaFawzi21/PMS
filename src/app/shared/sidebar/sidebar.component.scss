@@ -6,7 +6,7 @@
     width: 30px;
     height: 45px;
     border-radius: 10px 0 0 10px;
-    top: 15px;
+    top: 10px;
     right: 0;
   }
 
@@ -17,6 +17,8 @@
       align-items: center;
       gap: 20px;
       text-decoration: none;
+      margin: 10px;
+      border-radius: 15px;
       cursor: pointer;
       transition: all .3s ease-in-out;
 

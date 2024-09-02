@@ -7,6 +7,7 @@ import { DeleteComponent } from 'src/app/shared/delete/delete.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DashService } from 'src/app/dashboard/service/dash.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/auth/services/auth.service';
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html',
@@ -43,7 +44,8 @@ export class ProjectComponent {
     private _Router: Router,
     public dialog: MatDialog,
     private _DashService: DashService,
-    private _ToastrService: ToastrService
+    private _ToastrService: ToastrService,
+    private _AuthService: AuthService
   ) {}
 
   ngOnInit(): void {

@@ -11,22 +11,32 @@ import { TaskService } from '../../services/task.service';
   styleUrls: ['./add-edit-view.component.scss']
 })
 export class AddEditViewComponent {
-  title: string = '';
-  id: number = 0;
-  projectId: number = 0;
+  titleTask: string = '';
+  taskId: number = 0;
 
   allEmployees: any;
   allProjects: any;
 
-  //=======================
-  // =====Form Handle=======
-  formData = { title: '', description: '' };
   addNewForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
     employeeId: new FormControl(0, [Validators.required, Validators.min(1)]),
     projectId: new FormControl(0, [Validators.required]),
   });
+
+  // get title() {
+  //   return this.addNewForm.get('title');
+  // }
+  // get description() {
+  //   return this.addNewForm.get('description')
+  // }
+  // get employeeId() {
+  //   return this.addNewForm.get('employeeId')
+  // }
+  // get projectId() {
+  //   return this.addNewForm.get('employeeId')
+  // }
+
   constructor(
     private _Toaster: ToastrService,
     private _ActivatedRoute: ActivatedRoute,
@@ -40,24 +50,24 @@ export class AddEditViewComponent {
     this.getAllProjects();
 
     if (this._ActivatedRoute.snapshot.url[0].path === 'add-new') {
-      this.title = 'Add a New Task';
+      this.titleTask = 'Add a New Task';
     }
     else if (this._ActivatedRoute.snapshot.url[0].path === 'edit') {
-      this.title = 'Edit Task';
-      this.id = +this._ActivatedRoute.snapshot.url[1].path;
-      this.onGetTaskById(this.id);
+      this.titleTask = 'Edit Task';
+      this.taskId = +this._ActivatedRoute.snapshot.url[1].path;
+      this.onGetTaskById(this.taskId);
     }
     else {
-      this.title = 'View Task';
-      this.id = +this._ActivatedRoute.snapshot.url[1].path;
-      this.onGetTaskById(this.id);
+      this.titleTask = 'View Task';
+      this.taskId = +this._ActivatedRoute.snapshot.url[1].path;
+      this.onGetTaskById(this.taskId);
       this.addNewForm.disable();
     }
   }
 
   onSubmitForm(data: FormGroup) {
-    if (this.id > 0 && this.title === 'Edit Task') {
-      this._TaskService.updateTask(this.id, data.value).subscribe({
+    if (this.taskId > 0 && this.titleTask === 'Edit Task') {
+      this._TaskService.updateTask(this.taskId, data.value).subscribe({
         next: (res) => {
           console.log(res);
         },
@@ -114,21 +124,27 @@ export class AddEditViewComponent {
   onGetTaskById(id: number) {
     this._TaskService.getTaskById(id).subscribe({
       next: (res) => {
-
-
-        this.addNewForm.patchValue(res)
+        this.addNewForm.patchValue({
+          title: res.title,
+          description: res.description,
+          employeeId: res.employee.id,
+          projectId: res.project.id
+        });
+        
       },
       error: (err) => {
         console.log(err);
         this._Toaster.error(err.error.message, 'Error!')
       },
       complete: () => {
-
+        // this.title;
+        // this.description;
+        // this.employeeId;
+        // this.projectId;
       },
     })
   }
 
-  // All employees in system
   getAllEmployees() {
     this._TaskService.getAllUsers({
       groups: [2],
@@ -148,7 +164,6 @@ export class AddEditViewComponent {
     })
   }
 
-  // All projects of the manager [Shaimaa]
   getAllProjects() {
     this._TaskService.getAllProjectsManager({
       pageSize: 10000,
@@ -168,8 +183,4 @@ export class AddEditViewComponent {
       },
     });
   }
-
-
-
-
 }

@@ -12,6 +12,7 @@ import {
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnChanges {
+  
   @Input() headList: any[];
   @Input() gridList: any;
   @Output() actionClick = new EventEmitter<{
@@ -28,7 +29,6 @@ export class TableComponent implements OnChanges {
     if (changes['gridList'] && changes['gridList'].currentValue) {
       this.gridData = this.gridList.data;
       console.log(this.headList);
-      
     }
   }
 
