@@ -6,18 +6,20 @@ import { UsersComponent } from './users.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ViewComponent } from './components/view/view.component';
 import { BlockComponent } from './components/block/block.component';
+import { ChangepasswordComponent } from './component/changepassword/changepassword.component';
 
 
 @NgModule({
   declarations: [
     UsersComponent,
     ViewComponent,
-    BlockComponent
+    BlockComponent,
+    ChangepasswordComponent,
   ],
   imports: [
     CommonModule,
     UsersRoutingModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class UsersModule { }
