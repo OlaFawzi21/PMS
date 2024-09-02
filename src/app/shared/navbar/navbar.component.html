@@ -1,23 +1,29 @@
 <section class="bg-second-color">
   <div class="d-flex justify-content-between">
     <div class="">
-      <img
-        src="../../../assets/images/logoBoard.svg"
-        class="sora1"
-      />
+      <img src="../../../assets/images/logoBoard.svg" class="imgLogo" />
     </div>
-    <div class="avatar d-flex align-items-center justify-content-center">
+    <div [matMenuTriggerFor]="profile" class="avatar d-flex align-items-center justify-content-center" role="button">
       <mat-icon style="color: orange">notifications</mat-icon>|
-
-      <img
-        src="../../../assets/images/person.jpeg"
-        class="p-2 rounded-circle m-0 position-relative top-0 sora"
-      />
-
+      <img src="../../../assets/images/person.jpeg" class="p-2 rounded-circle m-0 position-relative top-0 imgProfile" />
       <div>
         <h6 class="mb-0">{{ Username }}</h6>
         <p class="email-text mb-0">{{ useremail }}</p>
+
       </div>
+      <mat-icon style="color: orange">arrow_drop_down</mat-icon>
+
+
+      <mat-menu #profile="matMenu" xPosition="before">
+        <button mat-menu-item routerLink="/dashboard/update-profile">
+          <mat-icon>update</mat-icon>
+          Update my profile
+        </button>
+        <button mat-menu-item (click)="logout()">
+          Log out
+          <mat-icon>logout</mat-icon>
+        </button>
+      </mat-menu>
     </div>
   </div>
 </section>

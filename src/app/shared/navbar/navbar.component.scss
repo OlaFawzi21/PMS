@@ -13,12 +13,21 @@ section {
     }
 }
 
-.sora {
+.imgProfile {
     height: 60px;
     width: 60px;
 }
 
-.sora1 {
+.imgLogo {
     height: 100%;
     width: 200px;
+}
+
+.mat-mdc-menu-item {
+    width: 17rem !important;
+}
+
+.mat-mdc-menu-panel {
+    min-width: 150px !important;
+    max-width: 350px !important;
 }
