@@ -31,11 +31,9 @@ export class UpdateProfileComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-
     private toastr: ToastrService,
     private router: Router,
     private _DashService: DashService,
-    // private _ActivatedRoute:ActivatedRoute 
   ) {
     this.profileForm.valueChanges.subscribe(() => {
       this.checkPasswords();
@@ -72,6 +70,23 @@ export class UpdateProfileComponent implements OnInit {
       this.confirmPassword?.setErrors({ notMatch: true });
     }
   }
+
+  
+  onGetCurrentUserProfile() {
+    this._DashService.getCurrentProfile().subscribe({
+      next: (res) => {
+        this.profileForm.patchValue(res);
+        this.imgSource = `https://upskilling-egypt.com:3003/api/v1/${res.imagePath}`
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('Completed Req!');
+      }
+    })
+  }
+
 
   onUpdateProfile(data: FormGroup) {
     let formData = new FormData();
@@ -131,20 +146,5 @@ export class UpdateProfileComponent implements OnInit {
     this.imgSource = null;
   }
 
-
-  onGetCurrentUserProfile() {
-    this._DashService.getCurrentProfile().subscribe({
-      next: (res) => {
-        this.profileForm.patchValue(res);
-        this.imgSource = `https://upskilling-egypt.com:3003/api/v1/${res.imagePath}`
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('Completed Req!');
-      }
-    })
-  }
 
 }
