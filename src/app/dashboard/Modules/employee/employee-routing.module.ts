@@ -7,11 +7,8 @@ const routes: Routes = [
     path: '',
     component: EmployeeComponent,
     children: [
-      {
-        path: 'projects',
-        loadChildren: () =>
-          import('./project/project.module').then((m) => m.ProjectModule),
-      },
+      { path: 'projects', loadChildren: () => import('./project/project.module').then((m) => m.ProjectModule) },
+      { path: 'view-task', loadChildren: () => import('./view-task/view-task.module').then(m => m.ViewTaskModule) },
     ],
   },
 ];
@@ -20,4 +17,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class EmployeeRoutingModule {}
+export class EmployeeRoutingModule { }

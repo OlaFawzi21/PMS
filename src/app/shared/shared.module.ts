@@ -18,6 +18,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { TableComponent } from './table/table.component';
 import { DeleteComponent } from './delete/delete.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { DeleteComponent } from './delete/delete.component';
     MatIconModule,
     MatSelectModule,
     ReactiveFormsModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    DragDropModule,
+    MatCardModule
   ],
   exports: [
     CommonModule,
@@ -57,7 +61,9 @@ import { DeleteComponent } from './delete/delete.component';
     MatIconModule,
     MatSelectModule,
     ReactiveFormsModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    DragDropModule,
+    MatCardModule
   ]
 })
 export class SharedModule { }
