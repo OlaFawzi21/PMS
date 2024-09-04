@@ -59,7 +59,7 @@ export class SidebarComponent {
     {
       title: 'Tasks',
       icon: 'format_list_bulleted',
-      link: '1',
+      link: '/dashboard/employee/view-task',
       isActive: this.isEmployee(),
     },
   ];
