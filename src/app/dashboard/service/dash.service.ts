@@ -27,5 +27,8 @@ export class DashService {
   deleteTask(id:number):Observable<any>{
     return this._HttpClient.delete(`Task/${id}`)
   }
+  usercount():Observable<any>{
+    return this._HttpClient.get('Users/count')
+  }
   
 }

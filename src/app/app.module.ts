@@ -19,7 +19,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ToastrModule.forRoot({
+     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
