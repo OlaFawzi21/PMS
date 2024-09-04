@@ -30,5 +30,10 @@ export class DashService {
   usercount():Observable<any>{
     return this._HttpClient.get('Users/count')
   }
-  
+   getCurrentProfile(): Observable<any> {
+    return this._HttpClient.get(`Users/currentUser`);
+  }
+  updateProfile(data: FormData): Observable<any> {
+    return this._HttpClient.put(`Users`, data)
+  }
 }
