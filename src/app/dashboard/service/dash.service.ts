@@ -28,12 +28,13 @@ export class DashService {
   deleteTask(id: number): Observable<any> {
     return this._HttpClient.delete(`Task/${id}`)
   }
-
-  getCurrentProfile(): Observable<any> {
+  usercount():Observable<any>{
+    return this._HttpClient.get('Users/count')
+  }
+   getCurrentProfile(): Observable<any> {
     return this._HttpClient.get(`Users/currentUser`);
   }
   updateProfile(data: FormData): Observable<any> {
     return this._HttpClient.put(`Users`, data)
   }
-
 }

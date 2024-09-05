@@ -8,6 +8,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./changepassword.component.scss']
 })
 export class ChangepasswordComponent {
+  hide: boolean = true;
+  isHideConfirm: boolean = true;
   constructor(
     public dialogRef: MatDialogRef<ChangepasswordComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
