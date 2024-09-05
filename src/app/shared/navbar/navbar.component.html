@@ -20,8 +20,19 @@
             <span>change password</span>
           </button>
       </mat-menu>
-      <img src="../../../assets/images/person.jpeg" class="p-2 rounded-circle m-0  position-relative top-0 sora">
 
+      <ngx-dropzone (change)="onSelect($event)" class=" w-25 h-50  mx-2 border-0 ">
+        <ngx-dropzone-label class="main-color ">
+          <mat-icon matSuffix>photo_camera</mat-icon>
+        </ngx-dropzone-label>
+        <ngx-dropzone-image-preview
+          ngProjectAs="ngx-dropzone-preview"
+          *ngFor="let f of files"
+          [file]="f"
+        >
+          <ngx-dropzone-label> </ngx-dropzone-label>
+        </ngx-dropzone-image-preview>
+      </ngx-dropzone>
       <div>
         <h6 class="mb-0">{{ Username }}</h6>
         <p class="email-text mb-0">{{ useremail }}</p>

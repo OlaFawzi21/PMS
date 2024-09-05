@@ -1,25 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { SharedService } from '../services/shared.service';
 import { ChangepasswordComponent } from 'src/app/dashboard/Modules/manager/users/component/changepassword/changepassword.component';
+import { UserService } from 'src/app/dashboard/Modules/manager/users/services/user.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   Username=localStorage.getItem('userName')
   useremail=localStorage.getItem('userEmail')
   erroMsg:string="";
   erroMsg2:string="";
   erroMsg3:string="";
+  current:any
   constructor(private dialog:MatDialog ,private _router:Router ,private _ToastrService:ToastrService
-    ,private  _SharedService:SharedService){}
+    ,private  _SharedService:SharedService,private _UserService:UserService){}
 
-  
+  ngOnInit(): void {
+    this.getcurentuser()
+  }
   openchangDialog(): void {
     const dialogRef = this.dialog.open(ChangepasswordComponent, {
       data: {},
@@ -56,5 +60,26 @@ this._SharedService.changepass(data).subscribe({
        },
      
 })
+} 
+
+getcurentuser(){
+  this._UserService.getcurrentUser().subscribe({
+    next:(res)=>{
+      this.current=res
+      console.log(this.current)
+    },complete:()=> {
+      if (this.current.imagePath) {
+        this._UserService.loadImage(this.current.imagePath,this.files);
+      }
+  }})
 }
+
+files: File[] = [];
+onSelect(event: any) {
+  console.log(event);
+  this.files = [];
+  this.files.push(...event.addedFiles);
+
+}
+
 }

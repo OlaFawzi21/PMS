@@ -25,6 +25,9 @@ export class UserService {
   blockUser(idUser: number): Observable<UserData> {
     return this._HttpClient.put<UserData>(`Users/${idUser}` ,{id : idUser});
   }
+  getcurrentUser(): Observable<any> {
+    return this._HttpClient.get<any>(`Users/currentUser`);
+  }
 
 
   imageUrl: any = 'https://upskilling-egypt.com:3003/';
