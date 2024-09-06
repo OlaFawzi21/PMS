@@ -20,7 +20,7 @@
       </button>
       <mat-menu #menu="matMenu"> </mat-menu> -->
       <img
-        src="https://upskilling-egypt.com:3003/{{current.imagePath}}"
+        src="https://upskilling-egypt.com:3003/{{ current?.imagePath }}"
         class="p-2 rounded-circle m-0 position-relative top-0 imgProfile"
       />
       <div>
@@ -31,16 +31,16 @@
 
       <mat-menu #profile="matMenu" xPosition="before">
         <button mat-menu-item routerLink="/dashboard/update-profile">
-          <mat-icon>update</mat-icon>
+          <mat-icon class="main-color">update</mat-icon>
           Update my profile
-        </button>
-        <button mat-menu-item (click)="logout()">
-          Log out
-          <mat-icon>logout</mat-icon>
         </button>
         <button mat-menu-item (click)="openchangDialog()">
           Change password
-          <mat-icon>lock</mat-icon>
+          <mat-icon class="main-color">lock</mat-icon>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          Log out
+          <mat-icon class="text-danger">logout</mat-icon>
         </button>
       </mat-menu>
     </div>

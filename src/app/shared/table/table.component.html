@@ -7,9 +7,7 @@
             <span>{{ head.headName }}</span>
             <span
               *ngIf="
-                head.keyName !== 'actions' &&
-                head.keyName !== 'imagePath' &&
-                head.keyName !== 'isActivated'
+                head.keyName !== 'actions' && head.keyName !== 'isActivated'
               "
             >
               <a (click)="sortData(head.keyName, 'asc')">
@@ -83,8 +81,23 @@
                 *ngFor="let action of head.actionsData"
                 (click)="handleAction(action.key, item)"
               >
-                <mat-icon class="main-color">{{ action.icon }}</mat-icon>
-                <span class="main-color">{{ action.key | titlecase }}</span>
+                <mat-icon
+                  class="main-color"
+                  [ngClass]="{
+                    dangerColor: action.key == 'delete' || action.key == 'block'
+                  }"
+                  >{{ action.icon }}</mat-icon
+                >
+                <span
+                  class="main-color"
+                  [ngClass]="{
+                    dangerColor:
+                      action.key == 'delete' ||
+                      action.key == 'block' ||
+                      action.key == 'un block'
+                  }"
+                  >{{item.isActivated === false && action.key==='block'? 'Un Block': action.key | titlecase }}</span
+                >
               </button>
             </mat-menu>
           </ng-container>

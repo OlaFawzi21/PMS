@@ -3,18 +3,22 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { DashService } from '../../service/dash.service';
+import { UserService } from '../../Modules/manager/users/services/user.service';
 
 @Component({
   selector: 'app-update-profile',
   templateUrl: './update-profile.component.html',
-  styleUrls: ['./update-profile.component.scss']
+  styleUrls: ['./update-profile.component.scss'],
 })
 export class UpdateProfileComponent implements OnInit {
   profileForm = this.fb.group({
     userName: ['', [Validators.required, Validators.minLength(4)]],
     email: ['', [Validators.required, Validators.email]],
     country: ['', Validators.required],
-    phoneNumber: ['', [Validators.required, Validators.pattern('^01[0125][0-9]{8}$')],],
+    phoneNumber: [
+      '',
+      [Validators.required, Validators.pattern('^01[0125][0-9]{8}$')],
+    ],
     password: ['', [Validators.required, Validators.minLength(6)]],
     confirmPassword: ['', Validators.required],
   });
@@ -34,12 +38,12 @@ export class UpdateProfileComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private _DashService: DashService,
+    private _UserService: UserService
   ) {
     this.profileForm.valueChanges.subscribe(() => {
       this.checkPasswords();
     });
   }
-
 
   ngOnInit(): void {
     this.onGetCurrentUserProfile();
@@ -71,22 +75,20 @@ export class UpdateProfileComponent implements OnInit {
     }
   }
 
-  
   onGetCurrentUserProfile() {
     this._DashService.getCurrentProfile().subscribe({
       next: (res) => {
         this.profileForm.patchValue(res);
-        this.imgSource = `https://upskilling-egypt.com:3003/api/v1/${res.imagePath}`
+        this._UserService.loadImage(res.imagePath, this.files);
       },
       error: (err) => {
         console.log(err);
       },
       complete: () => {
         console.log('Completed Req!');
-      }
-    })
+      },
+    });
   }
-
 
   onUpdateProfile(data: FormGroup) {
     let formData = new FormData();
@@ -99,7 +101,7 @@ export class UpdateProfileComponent implements OnInit {
     formData.append('profileImage', this.imgSource);
     this.isLoading = true;
     this._DashService.updateProfile(formData).subscribe({
-      next: (res) => { },
+      next: (res) => {},
       error: (err) => {
         this.errMsg = err.error.message;
         this.errMsgControl = err.error.additionalInfo;
@@ -121,12 +123,9 @@ export class UpdateProfileComponent implements OnInit {
         this.isLoading = false;
       },
       complete: () => {
-        this.toastr.success(
-          'Update Profile Successfully!.',
-          'Success'
-        );
-        this.isLoading = false;
-        this.router.navigate(['auth/login']);
+        this.toastr.success('Update Profile Successfully!.', 'Success');
+        location.reload();
+        this.files = [];
       },
     });
   }
@@ -145,6 +144,4 @@ export class UpdateProfileComponent implements OnInit {
     this.files = [];
     this.imgSource = null;
   }
-
-
 }

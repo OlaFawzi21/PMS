@@ -4,4 +4,8 @@ section {
   .box-table {
     min-height: 78vh;
   }
+
+  ::ng-deep td {
+    padding: 20px !important;
+  }
 }

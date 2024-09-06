@@ -28,7 +28,7 @@ export class UsersComponent {
       keyName: 'actions',
       actionsData: [
         { key: 'view', icon: 'visibility' },
-        { key: 'toggle block', icon: 'block' },
+        { key: 'block', icon: 'block' },
       ],
     },
   ];

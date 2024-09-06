@@ -4,6 +4,7 @@
   --default-color: #4F4F4F;
   --second-color: #fff;
   --ternary-black-color: #0E382F;
+  --danger-color: #ac0000;
   --bg-gray-color: #f0eeee;
   --bg-main-color: #EF9B28;
   --bg-second-color: #fff;
@@ -40,6 +41,10 @@
 
 .ternary-black-color {
   color: var(--ternary-black-color) !important;
+}
+
+.dangerColor {
+  color: var(--danger-color) !important;
 }
 
 .bg-main-color {
