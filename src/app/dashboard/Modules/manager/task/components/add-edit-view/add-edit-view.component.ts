@@ -8,7 +8,7 @@ import { TaskService } from '../../services/task.service';
 @Component({
   selector: 'app-add-edit-view',
   templateUrl: './add-edit-view.component.html',
-  styleUrls: ['./add-edit-view.component.scss']
+  styleUrls: ['./add-edit-view.component.scss'],
 })
 export class AddEditViewComponent {
   titleTask: string = '';
@@ -42,8 +42,7 @@ export class AddEditViewComponent {
     private _ActivatedRoute: ActivatedRoute,
     private _TaskService: TaskService,
     private _Router: Router
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getAllEmployees();
@@ -51,13 +50,11 @@ export class AddEditViewComponent {
 
     if (this._ActivatedRoute.snapshot.url[0].path === 'add-new') {
       this.titleTask = 'Add a New Task';
-    }
-    else if (this._ActivatedRoute.snapshot.url[0].path === 'edit') {
+    } else if (this._ActivatedRoute.snapshot.url[0].path === 'edit') {
       this.titleTask = 'Edit Task';
       this.taskId = +this._ActivatedRoute.snapshot.url[1].path;
       this.onGetTaskById(this.taskId);
-    }
-    else {
+    } else {
       this.titleTask = 'View Task';
       this.taskId = +this._ActivatedRoute.snapshot.url[1].path;
       this.onGetTaskById(this.taskId);
@@ -68,29 +65,26 @@ export class AddEditViewComponent {
   onSubmitForm(data: FormGroup) {
     if (this.taskId > 0 && this.titleTask === 'Edit Task') {
       this._TaskService.updateTask(this.taskId, data.value).subscribe({
-        next: (res) => {
-        },
+        next: (res) => {},
         error: (err) => {
-          this._Toaster.error(err.error.message, 'Error!')
+          this._Toaster.error(err.error.message, 'Error!');
         },
         complete: () => {
           this._Toaster.success('Task Updated Successfully', 'Success!');
           this._Router.navigate(['/dashboard/manager/tasks']);
-        }
-      })
-    }
-    else {
-      this._TaskService.addNewTask(data.value).subscribe({
-        next: (res) => {
         },
+      });
+    } else {
+      this._TaskService.addNewTask(data.value).subscribe({
+        next: (res) => {},
         error: (err) => {
-          this._Toaster.error(err.error.message, 'Error!')
+          this._Toaster.error(err.error.message, 'Error!');
         },
         complete: () => {
           this._Toaster.success('Successfully Added Task', 'Success!');
           this._Router.navigate(['/dashboard/manager/tasks']);
         },
-      })
+      });
     }
   }
 
@@ -100,15 +94,22 @@ export class AddEditViewComponent {
   }
   getDescriptionErrorMessage() {
     const descriptionControl: any = this.addNewForm.get('description');
-    return descriptionControl.hasError('required') ? 'Description is required.' : '';
+    return descriptionControl.hasError('required')
+      ? 'Description is required.'
+      : '';
   }
   getEmployeeErrorMessage() {
     const employeeControl: any = this.addNewForm.get('employeeId');
-    return employeeControl.hasError('required') || employeeControl.hasError('min') ? 'Select Employee is required.' : '';
+    return employeeControl.hasError('required') ||
+      employeeControl.hasError('min')
+      ? 'Select Employee is required.'
+      : '';
   }
   getProjectErrorMessage() {
     const projectControl: any = this.addNewForm.get('projectId');
-    return projectControl.hasError('required') || projectControl.hasError('min') ? 'Select Project is required.' : '';
+    return projectControl.hasError('required') || projectControl.hasError('min')
+      ? 'Select Project is required.'
+      : '';
   }
 
   onCancel() {
@@ -122,12 +123,11 @@ export class AddEditViewComponent {
           title: res.title,
           description: res.description,
           employeeId: res.employee.id,
-          projectId: res.project.id
+          projectId: res.project.id,
         });
-        
       },
       error: (err) => {
-        this._Toaster.error(err.error.message, 'Error!')
+        this._Toaster.error(err.error.message, 'Error!');
       },
       complete: () => {
         // this.title;
@@ -135,28 +135,33 @@ export class AddEditViewComponent {
         // this.employeeId;
         // this.projectId;
       },
-    })
+    });
   }
 
   getAllEmployees() {
-    this._TaskService.getAllUsers({
-      groups: [2],
-      pageSize: 10000,
-      pageNumber: 1
-    }).subscribe({
-      next: (res) => {
-        this.allEmployees = res.data;
-      },
-    })
+    this._TaskService
+      .getAllUsers({
+        groups: [2],
+        pageSize: 10000,
+        pageNumber: 1,
+      })
+      .subscribe({
+        next: (res) => {
+          this.allEmployees = res.data;
+        },
+      });
   }
 
   getAllProjects() {
-    this._TaskService.getAllProjectsManager({
-      pageSize: 10000,
-      pageNumber: 1
-    }).subscribe({
-      next: (res) => {
-      },
-    });
+    this._TaskService
+      .getAllProjectsManager({
+        pageSize: 10000,
+        pageNumber: 1,
+      })
+      .subscribe({
+        next: (res) => {
+          this.allProjects = res.data;
+        },
+      });
   }
 }
