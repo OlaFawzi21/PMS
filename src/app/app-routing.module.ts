@@ -3,8 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { authGuard } from './Core/Guards/auth.guard';
 
 const routes: Routes = [
-  { 
-    path: '', redirectTo: 'auth', pathMatch: 'full' },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
@@ -15,15 +13,20 @@ const routes: Routes = [
     loadChildren: () =>
       import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
-  // {
-  //   path: 'shared',
-  //   loadChildren: () =>
-  //     import('./shared/shared.module').then((m) => m.SharedModule),
-  // },
+  {
+    path: '',
+    redirectTo: 'auth',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      useHash: true,
+    }),
+  ],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

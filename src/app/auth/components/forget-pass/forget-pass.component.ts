@@ -23,18 +23,14 @@ export class ForgetPassComponent {
     
     this._AuthService.forgetpass(data).subscribe({
       next: (res) => {
-        console.log(res);
+        
       },
       error: (err) => {
-        console.log(err);
-
         this.erroMsg = err.error.additionalInfo.errors.email;
         console.timeLog(this.erroMsg);
         this._ToastrService.warning(this.erroMsg);
       },
       complete: () => {
-        console.log('completed');
-
         this._router.navigate(['/auth/resetPassword']);
       },
     });

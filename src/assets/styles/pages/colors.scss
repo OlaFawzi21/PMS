@@ -8,7 +8,7 @@
   --bg-gray-color: #f0eeee;
   --bg-main-color: #EF9B28;
   --bg-second-color: #fff;
-  --bg-ternary-color: rgba(49, 89, 81, 0.9);
+  --bg-ternary-color: rgb(49, 89, 81);
   --bg-sidebar-color: #0E382F;
   --bg-danger-color: #ac0000;
   --box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 15%);
@@ -16,14 +16,18 @@
 
 /* Dark Mode */
 .dark-theme {
-  --main-color: #FF9F43;
-  --default-color: #B0B0B0;
-  --second-color: #E0E0E0;
-  --ternary-black-color: #314a59;
-  --bg-main-color: #1E2A38;
-  --bg-second-color: #2C2C2C;
-  --bg-ternary-color: #1C2A36;
-  --bg-sidebar-color: #121212;
+  --main-color: #ffb86c;
+  --default-color: #eeeeee;
+  --second-color: #333333;
+  --ternary-black-color: #1b1b1b;
+  --danger-color: #ff5555;
+  --bg-gray-color: #2e2e2e;
+  --bg-main-color: #ffb86c;
+  --bg-second-color: #1e1e1e;
+  --bg-ternary-color: rgba(30, 30, 30, 0.9);
+  --bg-sidebar-color: #1b1b1b;
+  --bg-danger-color: #ff5555;
+  --box-shadow: 0 2px 4px 0 rgba(181, 181, 181, 0.1);
 }
 
 

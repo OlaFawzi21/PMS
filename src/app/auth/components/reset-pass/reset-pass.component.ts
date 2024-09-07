@@ -25,10 +25,8 @@ export class ResetPassComponent {
   onReset():void{
     this._AuthService.resetPass(this.resetform.value as ResetPass).subscribe({
 next:(res)=>{
-  console.log(res)
 },
 error:(err)=>{
-  console.log(err)
   this.errMsg = err.error.message;
   this.errMsgControl = err.error.additionalInfo
   if ( this.errMsgControl && this.errMsgControl.errors ) {

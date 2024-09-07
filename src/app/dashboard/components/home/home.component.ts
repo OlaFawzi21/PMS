@@ -11,13 +11,13 @@ Chart.register(...registerables);
 })
 export class HomeComponent implements OnInit {
   taskCount: any;
-  pagesize: 1000;
-  pagenumber = 1;
+  pagesize= 1000;
+  pageNumber = 1;
   projects: any;
   counter: number = 0;
   progress: any;
-  activated:number=0
-  deactivated:number
+  activated: number = 0;
+  deactivated: number;
 
   Username = localStorage.getItem('userName');
   role: string | null;
@@ -25,74 +25,69 @@ export class HomeComponent implements OnInit {
     private _DashService: DashService,
     private _AuthService: AuthService
   ) {}
- 
+
   ngOnInit(): void {
-this._DashService.usercount().subscribe({
-next:(res)=>{
-  console.log(res)
-  this.activated=res.activatedEmployeeCount
-  this.deactivated=res.deactivatedEmployeeCount
-console.log(this.activated)
-const ctx = document.getElementById('myChart');
-new Chart('myChart', {
-     type: 'doughnut',
-     data: {
-       labels: ['active', 'inactive'],
-       datasets: [{
-         label: '# of Votes',
-         data: [this.activated,this.deactivated],
-         borderWidth: 1
-       }]
-     },
-     options: {
-       scales: {
-         y: {
-           beginAtZero: true
-         }
-       }
-     }
-   });
-}
-})
+    this._DashService.usercount().subscribe({
+      next: (res) => {
+        this.activated = res.activatedEmployeeCount;
+        this.deactivated = res.deactivatedEmployeeCount;
+        const ctx = document.getElementById('myChart');
+        new Chart('myChart', {
+          type: 'doughnut',
+          data: {
+            labels: ['active', 'inactive'],
+            datasets: [
+              {
+                label: '# of Votes',
+                data: [this.activated, this.deactivated],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      },
+    });
     this.role = this._AuthService.userRole;
     if (this.role !== 'Employee') {
       this.getTasks();
-      this.getProjects();
-      this.getProgress();
+      this.getMyProjects();
+      this.getAllProject();
     }
- 
-    console.log(this.activated)
   }
-
 
   getTasks() {
     this._DashService.TASKS().subscribe({
       next: (res) => {
-        console.log(res);
         this.taskCount = res;
       },
     });
   }
-  getProjects() {
+  getMyProjects() {
     let data = {
       pageSize: this.pagesize,
-      pageNumber: this.pagenumber,
+      pageNumber: this.pageNumber,
     };
-    this._DashService.projectNumber(data).subscribe({
+    
+    this._DashService.myProjectNum(data).subscribe({
       next: (res) => {
-        console.log(res);
         this.projects = res;
       },
     });
   }
-  getProgress() {
+  getAllProject() {
     let data = {
       pageSize: this.pagesize,
-      pageNumber: this.pagenumber,
+      pageNumber: this.pageNumber,
     };
-    this._DashService.progress(data).subscribe({
+    this._DashService.allProjectNum(data).subscribe({
       next: (res) => {
-        console.log(res);
         this.progress = res;
         if (this.progress.data.isActivated == true) {
           this.counter = this.counter + 1;
@@ -100,6 +95,4 @@ new Chart('myChart', {
       },
     });
   }
- 
 }
-

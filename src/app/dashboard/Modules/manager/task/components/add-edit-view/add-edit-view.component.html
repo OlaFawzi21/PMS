@@ -37,7 +37,7 @@
                                 <mat-label>Employees</mat-label>
                                 <mat-select formControlName="employeeId">
                                     <mat-option *ngFor="let item of allEmployees" [value]="item.id">
-                                        {{item.userName}}
+                                        {{item.email}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error

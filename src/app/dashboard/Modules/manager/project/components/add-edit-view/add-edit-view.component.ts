@@ -24,14 +24,11 @@ export class AddEditViewComponent implements OnInit {
     if (this.id > 0 && this.title === 'Edit Project') {
       this._ProjectService.updateProject(this.id, data.value).subscribe({
         next: (res) => {
-          console.log(res);
         },
         error: (err) => {
-          console.log(err);
           this._Toaster.error(err.error.message, 'Error!');
         },
         complete: () => {
-          console.log('Completed Req!');
           this._Toaster.success('Project Updated Successfully', 'Success!');
           this.router.navigate(['/dashboard/manager/projects']);
         },
@@ -40,14 +37,11 @@ export class AddEditViewComponent implements OnInit {
     } else {
       this._ProjectService.addNewProject(data.value).subscribe({
         next: (res) => {
-          console.log(res);
         },
         error: (err) => {
-          console.log(err);
           this._Toaster.error(err.error.message, 'Error!');
         },
         complete: () => {
-          console.log('Completed Req!');
           this._Toaster.success('Successfully Added Project', 'Success!');
           this.router.navigate(['/dashboard/manager/projects']);
         },
@@ -71,15 +65,12 @@ export class AddEditViewComponent implements OnInit {
   onGetProjectById(id: number) {
     this._ProjectService.getProjectById(id).subscribe({
       next: (res) => {
-        console.log(res);
         this.formData = res;
       },
       error: (err) => {
-        console.log(err);
         this._Toaster.error(err.error.message, 'Error!');
       },
       complete: () => {
-        console.log('Completed Req!');
         this.addNewForm.patchValue({
           title: this.formData?.title,
           description: this.formData?.description,

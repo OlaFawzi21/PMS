@@ -11,7 +11,7 @@ import { DeleteComponent } from 'src/app/shared/delete/delete.component';
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
-  styleUrls: ['./task.component.scss']
+  styleUrls: ['./task.component.scss'],
 })
 export class TaskComponent {
   headArray = [
@@ -35,7 +35,7 @@ export class TaskComponent {
   ];
   tasksList: Task;
   searchKey: string = '';
-  searchStatus : string = ''
+  searchStatus: string = '';
   length = 0;
   pageSize = 10;
   pageIndex = 0;
@@ -64,7 +64,6 @@ export class TaskComponent {
     this._TaskService.getTasks(params).subscribe({
       next: (res) => {
         this.tasksList = res;
-        console.log(this.tasksList);
       },
     });
   }
@@ -86,28 +85,24 @@ export class TaskComponent {
       case 'view':
         this.viewProject(task);
         break;
-      default:
-        console.log('Unknown action:', action);
     }
   }
 
   editProject(task: TaskData) {
-    console.log('Editing project:', task);
     this._Router.navigate(['/dashboard/manager/tasks/edit', task.id]);
   }
 
   deleteTask(task: TaskData) {
-    console.log('Deleting task:', task);
-    this.openDeleteDialog(task.id);
+    this.openDeleteDialog(task);
   }
 
-  openDeleteDialog(myid: number): void {
+  openDeleteDialog(task: TaskData): void {
     const dialogRef = this.dialog.open(DeleteComponent, {
-      data: { text: 'Task', id: myid },
+      data: { text: task.title, id: task.id },
+      width: '50%',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('my' + result);
       if (result) {
         this.onDelete(result);
       }
@@ -117,10 +112,7 @@ export class TaskComponent {
   onDelete(id: number) {
     this._DashService.deleteTask(id).subscribe({
       next: (res) => {
-        this._ToastrService.success(
-          'task deleted successfully',
-          'Success!'
-        );
+        this._ToastrService.success('task deleted successfully', 'Success!');
       },
       complete: () => {
         this.getTasks();
@@ -129,7 +121,6 @@ export class TaskComponent {
   }
 
   viewProject(project: TaskData) {
-    console.log('Viewing project:', project);
     this._Router.navigate(['/dashboard/manager/tasks/view', project.id]);
   }
 
@@ -148,5 +139,4 @@ export class TaskComponent {
         .map((str) => +str);
     }
   }
-
 }

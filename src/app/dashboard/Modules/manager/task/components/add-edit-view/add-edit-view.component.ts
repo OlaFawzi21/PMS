@@ -69,14 +69,11 @@ export class AddEditViewComponent {
     if (this.taskId > 0 && this.titleTask === 'Edit Task') {
       this._TaskService.updateTask(this.taskId, data.value).subscribe({
         next: (res) => {
-          console.log(res);
         },
         error: (err) => {
-          console.log(err);
           this._Toaster.error(err.error.message, 'Error!')
         },
         complete: () => {
-          console.log('Completed Req!');
           this._Toaster.success('Task Updated Successfully', 'Success!');
           this._Router.navigate(['/dashboard/manager/tasks']);
         }
@@ -85,14 +82,11 @@ export class AddEditViewComponent {
     else {
       this._TaskService.addNewTask(data.value).subscribe({
         next: (res) => {
-          console.log(res);
         },
         error: (err) => {
-          console.log(err);
           this._Toaster.error(err.error.message, 'Error!')
         },
         complete: () => {
-          console.log('Completed Req!');
           this._Toaster.success('Successfully Added Task', 'Success!');
           this._Router.navigate(['/dashboard/manager/tasks']);
         },
@@ -133,7 +127,6 @@ export class AddEditViewComponent {
         
       },
       error: (err) => {
-        console.log(err);
         this._Toaster.error(err.error.message, 'Error!')
       },
       complete: () => {
@@ -152,14 +145,7 @@ export class AddEditViewComponent {
       pageNumber: 1
     }).subscribe({
       next: (res) => {
-        console.log(res);
         this.allEmployees = res.data;
-      },
-      error: (err) => {
-        console.log(err.error.message);
-      },
-      complete: () => {
-        console.log('Completed All Users Request');
       },
     })
   }
@@ -170,16 +156,6 @@ export class AddEditViewComponent {
       pageNumber: 1
     }).subscribe({
       next: (res) => {
-        console.log(res);
-        this.allProjects = res.data;
-        console.log(this.allProjects);
-        // this.projectId = res.data.id;
-      },
-      error: (err) => {
-        console.log(err.error.message);
-      },
-      complete: () => {
-        console.log('Completed All Projects Request');
       },
     });
   }

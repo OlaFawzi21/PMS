@@ -40,18 +40,15 @@ export class LoginComponent {
   onLogin(data: FormGroup) {
     this._AuthService.login(data.value).subscribe({
       next: (res) => {
-        console.log(res);
         localStorage.clear;
         localStorage.setItem( 'userToken', res.token );
         
         this._AuthService.getProfile();
       },
       error: (err) => {
-        console.log(err);
         this._ToastrService.error(err.error.message, 'Error!');
       },
       complete: () => {
-        console.log('Completed Login');
         this._ToastrService.success(
           " You're now logged in. Let’s get started.",
           'Success!'

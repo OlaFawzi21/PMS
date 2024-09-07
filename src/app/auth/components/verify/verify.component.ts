@@ -34,7 +34,6 @@ export class VerifyComponent {
   onVerify(data: FormGroup) {
     this._AuthService.onVerify(data.value).subscribe({
       next: (res) => {
-        console.log(res);
       },
       error: (err) => {
         this.toastr.error(err.error.message, 'Error');

@@ -2,10 +2,17 @@
   <app-navbar></app-navbar>
 
   <div class="row mx-0 overflow-hidden">
-    <div class="col-2 p-0">
-      <app-sidebar></app-sidebar>
+    <div class="p-0"  [ngClass]="{
+      'col-1': isToggle,
+      'col-2': !isToggle
+    }">
+      <app-sidebar (toggle)="receiveToggle($event)"></app-sidebar>
     </div>
-    <div class="col-10 p-0">
+    <div class="p-0"
+    [ngClass]="{
+      'col-11': isToggle,
+      'col-10': !isToggle
+    }">
       <router-outlet></router-outlet>
     </div>
   </div>

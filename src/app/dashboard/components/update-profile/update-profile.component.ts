@@ -82,10 +82,8 @@ export class UpdateProfileComponent implements OnInit {
         this._UserService.loadImage(res.imagePath, this.files);
       },
       error: (err) => {
-        console.log(err);
       },
       complete: () => {
-        console.log('Completed Req!');
       },
     });
   }
@@ -132,14 +130,12 @@ export class UpdateProfileComponent implements OnInit {
 
   // Photo
   onSelect(event: any) {
-    console.log(event);
     this.files = [];
     this.files.push(...event.addedFiles);
     this.imgSource = this.files[0];
   }
 
   onRemove(event: any) {
-    console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
     this.files = [];
     this.imgSource = null;

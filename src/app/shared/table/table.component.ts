@@ -28,7 +28,6 @@ export class TableComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['gridList'] && changes['gridList'].currentValue) {
       this.gridData = this.gridList.data;
-      console.log(this.headList);
     }
   }
 

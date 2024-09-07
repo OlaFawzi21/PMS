@@ -23,8 +23,16 @@
   border-bottom-color: #ddd !important;
 }
 
+.mdc-text-field--filled.mdc-text-field--disabled .mdc-floating-label,
+.mdc-text-field--filled.mdc-text-field--disabled .mdc-floating-label--float-above{
+  color: var(--ternary-black-color) !important;
+}
+.mdc-text-field--filled.mdc-text-field--disabled .mdc-text-field__input {
+  color: var(--main-color) !important;
+}
+
 mat-error,
-mat-hint{
+mat-hint {
   font-size: 13px !important;
 }
 
@@ -33,6 +41,6 @@ mat-hint{
   font-size: 13px !important;
 }
 
-mat-icon{
+mat-icon {
   display: flex !important;
 }

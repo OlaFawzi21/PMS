@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { DashService } from 'src/app/dashboard/service/dash.service';
 import { Router } from '@angular/router';
-import { DeleteComponent } from 'src/app/shared/delete/delete.component';
 import { UserService } from './services/user.service';
 import { User, UserData } from './interfaces/user';
 import { BlockComponent } from './components/block/block.component';
@@ -77,14 +75,12 @@ export class UsersComponent {
 
   onActionClick(action: string, user: UserData) {
     switch (action) {
-      case 'toggle block':
+      case 'block':
         this.blockUser(user);
         break;
       case 'view':
         this.viewUser(user);
         break;
-      default:
-        console.log('Unknown action:', action);
     }
   }
 
@@ -99,6 +95,7 @@ export class UsersComponent {
   openDialog(data: UserData): void {
     const dialogRef = this.dialog.open(BlockComponent, {
       data: data,
+      width: '50%'
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -108,7 +105,6 @@ export class UsersComponent {
             this.resMsg = res;
           },
           error: (err) => {
-            console.log(err);
           },
           complete: () => {
             if (this.resMsg.isActivated == false) {

@@ -36,6 +36,9 @@
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "sweetalert2"
             ]
           },
           "configurations": {
@@ -43,7 +46,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "700kb",
+                  "maximumWarning": "800kb",
                   "maximumError": "1.3mb"
                 },
                 {
@@ -52,6 +55,7 @@
                   "maximumError": "4kb"
                 }
               ],
+              "optimization": true,
               "outputHashing": "all"
             },
             "development": {

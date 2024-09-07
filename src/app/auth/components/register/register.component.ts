@@ -108,14 +108,12 @@ export class RegisterComponent {
 
   // Photo
   onSelect(event: any) {
-    console.log(event);
     this.files = [];
     this.files.push(...event.addedFiles);
     this.imgSource = this.files[0];
   }
 
   onRemove(event: any) {
-    console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
     this.files = [];
     this.imgSource = null;

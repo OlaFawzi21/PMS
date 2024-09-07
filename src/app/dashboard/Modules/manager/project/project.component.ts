@@ -61,7 +61,6 @@ export class ProjectComponent {
     this._ProjectService.getProjects(params).subscribe({
       next: (res) => {
         this.projectList = res;
-        console.log(this.projectList);
       },
     });
   }
@@ -82,30 +81,26 @@ export class ProjectComponent {
       case 'view':
         this.viewProject(project);
         break;
-      default:
-        console.log('Unknown action:', action);
     }
   }
 
   editProject(project: ProjectData) {
-    console.log('Editing project:', project);
     // Implement edit logic
     this._Router.navigate(['/dashboard/manager/projects/edit', project.id]);
   }
 
   deleteProject(project: ProjectData) {
-    console.log('Deleting project:', project);
     // Implement delete logic
-    this.opendeleteDialog(project.id);
+    this.opendeleteDialog(project);
   }
 
-  opendeleteDialog(myid: number): void {
+  opendeleteDialog(project: ProjectData): void {
     const dialogRef = this.dialog.open(DeleteComponent, {
-      data: { text: 'project', id: myid },
+      data: { text: project.title, id: project.id },
+      width: '50%',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('my' + result);
       if (result) {
         this.ondelete(result);
       }
@@ -126,7 +121,6 @@ export class ProjectComponent {
     });
   }
   viewProject(project: ProjectData) {
-    console.log('Viewing project:', project);
     // Implement view logic
     this._Router.navigate(['/dashboard/manager/projects/view', project.id]);
   }

@@ -1,6 +1,7 @@
-
 .table {
   width: 100%;
+  border-collapse: collapse;
+
   th,
   td {
     min-width: 208px !important;
@@ -16,15 +17,21 @@
   }
 
   td {
-    padding-inline: 10px ;
+    padding-inline: 10px;
     color: var(--default-color);
   }
+
 }
 
+.frozen {
+  position: sticky;
+  right: 0;
+  z-index: 100;
+}
 .table>tbody>tr:nth-child(even)>td {
-  background-color: var(--bg-gray-color);
+  background-color: var(--bg-gray-color) !important;
 }
 
 .table>tbody>tr:nth-child(odd)>td {
-  background-color: var(--bg-second-color);
+  background-color: var(--bg-second-color) !important;
 }

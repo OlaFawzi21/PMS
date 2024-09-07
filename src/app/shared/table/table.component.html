@@ -2,7 +2,7 @@
   <table class="table table-striped m-0">
     <thead>
       <tr>
-        <th *ngFor="let head of headList">
+        <th *ngFor="let head of headList" [ngClass]="{frozen : head.keyName == 'actions'}">
           <div class="d-flex align-items-center justify-content-center gap-2">
             <span>{{ head.headName }}</span>
             <span
@@ -27,7 +27,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of gridData">
-        <td *ngFor="let head of headList">
+        <td *ngFor="let head of headList" [ngClass]="{frozen : head.keyName == 'actions'}">
           <ng-container *ngIf="head.keyName !== 'actions'">
             <ng-container *ngIf="head.keyName.includes('Date'); else notDate">
               {{ item[head.keyName] | date : "dd/MM/yyyy" }}
@@ -96,7 +96,11 @@
                       action.key == 'block' ||
                       action.key == 'un block'
                   }"
-                  >{{item.isActivated === false && action.key==='block'? 'Un Block': action.key | titlecase }}</span
+                  >{{
+                    item.isActivated === false && action.key === "block"
+                      ? "Un Block"
+                      : (action.key | titlecase)
+                  }}</span
                 >
               </button>
             </mat-menu>

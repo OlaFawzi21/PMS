@@ -33,7 +33,6 @@ export class ViewTaskComponent implements OnInit {
     this._EmployeeTaskService.getMyTasks().subscribe({
       next: (res) => {
         const allMyTasks = res.data;
-        console.log(allMyTasks);
         this.todo = allMyTasks.filter((allMyTasks: any) => allMyTasks.status === 'ToDo');
         this.inProgress = allMyTasks.filter((allMyTasks: any) => allMyTasks.status === 'InProgress');
         this.done = allMyTasks.filter((allMyTasks: any) => allMyTasks.status === 'Done');
@@ -46,10 +45,8 @@ export class ViewTaskComponent implements OnInit {
 
     this._EmployeeTaskService.updateTaskStatus(id, statusData).subscribe({
       next: (res) => {
-        console.log(res);
       },
       error: (err) => {
-        console.log(err);
       }
     })
   }

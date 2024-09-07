@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { SharedService } from '../services/shared.service';
 import { ChangepasswordComponent } from 'src/app/dashboard/Modules/manager/users/component/changepassword/changepassword.component';
 import { UserService } from 'src/app/dashboard/Modules/manager/users/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-navbar',
@@ -33,16 +34,28 @@ export class NavbarComponent implements OnInit {
   // userId:number=0;
 
   logout() {
-    localStorage.removeItem('userToken');
-    localStorage.removeItem('userEmail');
-    localStorage.removeItem('role');
-    localStorage.clear();
-    this._router.navigate(['/auth/login']);
+    Swal.fire({
+      title: 'Are you sure logout!?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#EF9B28',
+      cancelButtonColor: '#ac0000',
+      confirmButtonText: 'Yes',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem('userToken');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('role');
+        localStorage.clear();
+        this._router.navigate(['/auth/login']);
+      }
+    });
   }
 
   openchangDialog(): void {
     const dialogRef = this.dialog.open(ChangepasswordComponent, {
       data: {},
+      width: '50%',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -53,11 +66,8 @@ export class NavbarComponent implements OnInit {
   }
   onchange(data: any) {
     this._SharedService.changepass(data).subscribe({
-      next: (res) => {
-        console.log(res);
-      },
+      next: (res) => {},
       error: (err) => {
-        console.log(err);
         (this.erroMsg = err.error.additionalInfo.errors.confirmNewPassword),
           (this.erroMsg2 = err.error.additionalInfo.errors.newPassword);
         this.erroMsg3 = err.error.additionalInfo.errors.oldPassword;
@@ -68,7 +78,6 @@ export class NavbarComponent implements OnInit {
         this._ToastrService.warning(this.erroMsg3);
       },
       complete: () => {
-        console.log('completed');
         this._ToastrService.success('success');
       },
     });
@@ -78,7 +87,6 @@ export class NavbarComponent implements OnInit {
     this._UserService.getcurrentUser().subscribe({
       next: (res) => {
         this.current = res;
-        console.log(this.current);
       },
     });
   }

@@ -1,12 +1,11 @@
 section {
-    min-height: 100vh;
+    height: 100%;
 }
 
 .sec1 {
     background-image: url('../../../../assets/images/project-bg.jpeg');
     background-size: cover;
     background-position: center center;
-    height: 50vh;
 
     span {
         color: var(--main-color);
